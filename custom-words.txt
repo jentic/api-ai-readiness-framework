@@ -1,0 +1,17 @@
+agentic
+AIRU
+airu
+ARAX
+arax
+Arazzo
+Auth
+Flesch
+HATEOAS
+JAIRF
+Jentic
+Kincaid
+llm
+llms
+opid
+parsable
+Redocly

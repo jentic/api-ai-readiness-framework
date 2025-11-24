@@ -1,0 +1,21 @@
+{
+    "version": "0.2",
+    "language": "en-GB",
+    "dictionaries": [
+      "custom-words",
+      "en-gb",
+      "technical"
+    ],
+    "dictionaryDefinitions": [
+      {
+        "name": "custom-words",
+        "path": "./custom-words.txt",
+        "description": "Custom dictionary for specific words that are common and correct within our Jentic API AI-Readiness Scoring Framework"
+      }
+    ],
+    "ignorePaths": [
+      "**/node_modules/**",
+      "**/dist/**"
+    ]
+  }
+  

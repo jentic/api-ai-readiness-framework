@@ -1,0 +1,11 @@
+.vscode/settings.json
+.idea
+*.iml
+*.ipr
+*.iws
+target
+node_modules/
+deploy/
+deploy-preview/
+history
+coverage/
