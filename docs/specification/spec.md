@@ -12,58 +12,61 @@ The Jentic API AI-Readiness Framework (JAIRF) defines a standardized methodology
 This specification defines six scored dimensions, grouped into three pillars, and a unified scoring and weighting model that produces an overall AI-Readiness Index between 0 and 100.
 
 JAIRF is designed to evaluate an API’s ability to be:
- - Interpretable — easily understood by reasoning systems
- - Operable — safe and predictable to execute
- - Discoverable — findable, indexable, and contextually exposed
- - Governable — aligned with secure and trustworthy practices
+
+- Interpretable — easily understood by reasoning systems
+- Operable — safe and predictable to execute
+- Discoverable — findable, indexable, and contextually exposed
+- Governable — aligned with secure and trustworthy practices
 
 The framework may be applied to:
- - Single APIs
- - Entire API portfolios
- - API gateways or registries
- - Design-time and runtime validation tools
+
+- Single APIs
+- Entire API portfolios
+- API gateways or registries
+- Design-time and runtime validation tools
 
 JAIRF MAY be implemented as a feedback layer during API delivery, a CI/CD quality gate, a governance control, an automated readiness classifier, or as part of an AI-agent execution platform.
 
-<!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0-->
 ## Table of Contents
- - [Scope](#scope)
- - [Terminology](#terminology)
- - [Framework Architecture](#framework-architecture)
- - [Dimension Model Overview](#dimensional-model-overview)
- - [Dimension Definitions](#dimension-definitions)
-   - [Foundational Compliance (FC)](#foundational-compliance-fc)
-   - [Developer Experience & Tooling Compatibility (DXJ)](#developer-experience--tooling-compatibility-dxj)
-   - [AI-Readiness & Agent Experience (ARAX)](#ai-readiness--agent-experience-arax)
-   - [Agent Usability (AU)](#agent-usability-au)
-   - [Security (SEC)](#security-sec)
-   - [AI Discoverability (AID)](#ai-discoverability-aid)
- - [Normalisation Rules](#normalisation-rules)
- - [Scoring Model & Formulae](#scoring-model--formulae)
- - [Appendix A: General Definitions](#appendix-a-general-definitions)
 
-<!-- /TOC -->
+- [Scope](#scope)
+- [Terminology](#terminology)
+- [Framework Architecture](#framework-architecture)
+- [Dimension Model Overview](#dimensional-model-overview)
+- [Dimension Definitions](#dimension-definitions)
+  - [Foundational Compliance (FC)](#foundational-compliance-fc)
+  - [Developer Experience & Tooling Compatibility (DXJ)](#developer-experience--tooling-compatibility-dxj)
+  - [AI-Readiness & Agent Experience (ARAX)](#ai-readiness--agent-experience-arax)
+  - [Agent Usability (AU)](#agent-usability-au)
+  - [Security (SEC)](#security-sec)
+  - [AI Discoverability (AID)](#ai-discoverability-aid)
+- [Normalisation Rules](#normalisation-rules)
+- [Scoring Model & Formulae](#scoring-model--formulae)
+- [Appendix A: General Definitions](#appendix-a-general-definitions)
+
+<!-- /TOC-->
 
 ## Scope
 
 This specification defines:
 
- - The conceptual model for API AI-readiness
- - The scoring dimensions and required signals
- - The weighting and aggregation model
- - The readiness levels and classification thresholds
- - The normative behaviours required for compliant scoring engines
+- The conceptual model for API AI-readiness
+- The scoring dimensions and required signals
+- The weighting and aggregation model
+- The readiness levels and classification thresholds
+- The normative behaviours required for compliant scoring engines
 
 This specification explicitly does not define:
 
- - How an API provider MUST design APIs
- - A proprietary scoring algorithm inaccessible to auditors
- - Enforcement or certification process
+- How an API provider MUST design APIs
+- A proprietary scoring algorithm inaccessible to auditors
+- Enforcement or certification process
 
 JAIRF is intended to be implementation-agnostic, vendor-neutral, and API-format-agnostic, supporting (for now):
 
- - OpenAPI 3.x
- - OpenAPI 2.x
+- OpenAPI 3.x
+- OpenAPI 2.x
 
 ## Terminology
 
@@ -88,9 +91,10 @@ JAIRF defines six dimensions.
 A higher-level category that bundles dimensions.
 
 JAIRF defines three groups:
- - FDX — Foundational & Developer Experience
- - AIRU — AI-Readiness & Usability
- - TSD — Trust / Safety / Discoverability
+
+- FDX — Foundational & Developer Experience
+- AIRU — AI-Readiness & Usability
+- TSD — Trust / Safety / Discoverability
 
 ### Aggregation
 
@@ -110,11 +114,11 @@ All global normalisation rules are defined in [Normalisation Rules](#normalisati
 A human-interpretable categorization mapped from the final readiness score:
 
 | Level | Range | Interpretation |
-| ---- | ---- | ---- |
+| --- | --- | --- |
 | Level 0 | `< 40` | Not Ready |
-| Level 1 | `40 - 60` | Foundational |
-| Level 2 | `60 - 75` | AI-Aware |
-| Level 3 | `75 - 90` | AI-Ready |
+| Level 1 | `40- 60` | Foundational |
+| Level 2 | `60- 75` | AI-Aware |
+| Level 3 | `75- 90` | AI-Ready |
 | Level 4 | `> 90` | Agent-Optimized |
 
 ### Grading
@@ -124,18 +128,20 @@ A letter grade applied to each dimension and to the overall score.
 ## Framework Architecture
 
 JAIRF defines a three-layer scoring architecture:
- - Signals Layer (raw metrics → 0–1 scale)
- - Dimension Layer (normalised signals → 0–100)
- - Aggregation Layer (weighted harmonic mean → final score)
+
+- Signals Layer (raw metrics → 0–1 scale)
+- Dimension Layer (normalised signals → 0–100)
+- Aggregation Layer (weighted harmonic mean → final score)
 
 This architecture MUST be preserved by any conformant implementation.
 
 A conformant engine MUST:
- - Compute each dimension exactly as defined
- - Apply weights as defined (or disclose weights)
- - Use weighted harmonic aggregation
- - Apply gating rules prior to final scoring
- - Apply readiness classification and grading
+
+- Compute each dimension exactly as defined
+- Apply weights as defined (or disclose weights)
+- Use weighted harmonic aggregation
+- Apply gating rules prior to final scoring
+- Apply readiness classification and grading
 
 The scoring mechanism MUST be deterministic and reproducible for any API input.
 
@@ -152,22 +158,25 @@ The purpose of this section is conceptual orientation. Normative definitions of 
 Assesses whether an API is structurally valid, standards-compliant, and usable by humans and tooling. This establishes the prerequisite conditions for any form of automated interpretation.
 
 Dimensions included:
- - Foundational Compliance
- - Developer Experience & Tooling Compatibility
+
+- Foundational Compliance
+- Developer Experience & Tooling Compatibility
 
 #### AI-Readiness & Usability (AIRU)
 
  Evaluates the semantic clarity, intent expression, operational structure, and agent-operability of an API. These dimensions determine how effectively intelligent agents can interpret, plan, and execute API operations.
 
 Dimensions included:
- - AI-Readiness & Agent Experience
- - Agent Usability
+
+- AI-Readiness & Agent Experience
+- Agent Usability
 
 #### Trust, Safety, & Discoverability
 
 Ensures that the API can be safely exposed to AI systems and that it can be effectively located, classified, and reasoned about within automated discovery environments.
 
 Dimensions include:
+
 - Security
 - AI Discoverability
 
@@ -175,10 +184,11 @@ Dimensions include:
 
 Each dimension represents a distinct aspect of AI readiness and MUST be evaluated independently.
 The framework assumes that:
- - No dimension compensates for another - a weakness in any dimension constrains overall readiness.
- - Dimensions progress in logical maturity order (Foundational correctness → semantic clarity → safe exposure and discoverability).
- - All dimensions score in the range [0–100], derived from normalised signals.
- - The final AI-Readiness score is computed later using a weighted harmonic mean of the six dimensions.
+
+- No dimension compensates for another- a weakness in any dimension constrains overall readiness.
+- Dimensions progress in logical maturity order (Foundational correctness → semantic clarity → safe exposure and discoverability).
+- All dimensions score in the range [0–100], derived from normalised signals.
+- The final AI-Readiness score is computed later using a weighted harmonic mean of the six dimensions.
 
 ## Dimension Definitions
 
@@ -192,30 +202,31 @@ An API MUST NOT be considered AI-ready if it fails foundational parsing or conta
 
 #### Required Signals
 
-|       Signal      |       Description     |       Normalisation Rule      |
-| ----------------- | --------------------- | ----------------------------- |
-| `spec_validity`	| MUST indicate whether the API parses as valid OpenAPI. | [binary](#binary-checks) |
-| `resolution_completeness`	| MUST represent the proportion of $ref references that successfully resolve | [coverage](#coverage-normalisation) |
-| `lint_results`	| Aggregated quality score from linter diagnostics, weighted by severity. | inverse [weighted categorical ratio](#weighted-categorical-normalisation) |
-| `structural_integrity` |	MUST score schema correctness (e.g., oneOf misuse, contradictory typing, impossible constraints). | [inverse error](#inverse-error-normalisation) |
+| Signal | Description | Normalisation Rule |
+| ---------------- | -------------------- | ---------------------------- |
+| `spec_validity` | MUST indicate whether the API parses as valid OpenAPI. | [binary](#binary-checks) |
+| `resolution_completeness` | MUST represent the proportion of $ref references that successfully resolve | [coverage](#coverage-normalisation) |
+| `lint_results` | Aggregated quality score from linter diagnostics, weighted by severity. | inverse [weighted categorical ratio](#weighted-categorical-normalisation) |
+| `structural_integrity` | MUST score schema correctness (e.g., oneOf misuse, contradictory typing, impossible constraints). | [inverse error](#inverse-error-normalisation) |
 
 #### Spec Validity (spec_validity)
 
-```
+```text
 spec_validity = 1  if specification parses successfully  
 spec_validity = 0  otherwise
 ```
 
 #### Resolution Completeness (resolution_completeness)
 
-```
+```text
 resolution_completeness = resolved_refs / total_refs
 ```
 
 If `total_refs = 0`, the value MUST be `1.0`.
 
 ##### Example
-```
+
+```text
 resolution_completeness = 0.92  
 # (23 of 25 $ref links resolved successfully)
 ```
@@ -224,16 +235,16 @@ resolution_completeness = 0.92
 
 This signal leverages core ruleset of Spectral and Redocly, with Jentic opinions applied, as well as a Jentic custom ruleset.
 
-```
+```text
 weighted_cost = SQRT((1.0 * critical) + (0.6 * errors) + (0.025 * warnings) + (0.005 * info))
 
-lint_results = max(0, 1 - (weighted_cost / 25))
+lint_results = max(0, 1- (weighted_cost / 25))
 ```
 
 #### Structural Integrity (structural_integrity)
 
-```
-structural_integrity = max(0, 1 - (issues / 15))
+```text
+structural_integrity = max(0, 1- (issues / 15))
 ```
 
 **Threshold**
@@ -241,25 +252,25 @@ A threshold of 15 represents the point where structural reliability collapses. O
 
 A _structural issue_ is recorded when any of the following occur:
 
-| Category  |   Examples     |
-| --------- | ------------- |
-| Invalid model shape | `type: object` but no `properties` defined|
-| Contradictory typing | `type: string` + `format: int32`|
-| Impossible constraints| `minimum > maximum` and contradictory schema constructs (where possible) |
-| Broken polymorphism | `oneOf` without discriminator (or incorrect discriminator usage/mapping), mismatched sub-schemas|
+| Category | Examples |
+| -------- | ------------ |
+| Invalid model shape | `type: object` but no `properties` defined |
+| Contradictory typing | `type: string` + `format: int32` |
+| Impossible constraints | `minimum > maximum` and contradictory schema constructs (where possible) |
+| Broken polymorphism | `oneOf` without discriminator (or incorrect discriminator usage/mapping), mismatched sub-schemas |
 | Response/request undefined | `requestBody: {}` or missing schema |
 | Non-evaluable example | example invalid JSON or contradicting type |
 
 #### Dimension Score
 
-```
+```text
 FC = 100 × (spec_validity + resolution_completeness + lint_results + structural_integrity) / 4
 ```
 
 ##### Example
 
-```
-spec_validity: 1.0    	        # spec parsed successfully
+```text
+spec_validity: 1.0              # spec parsed successfully
 resolution_completeness: 0.92   # 92% of refs resolved
 lint_results: 0.85              # post-weighting
 structural_integrity: 0.88      # schema irregularities
@@ -275,18 +286,18 @@ An API with strong DXJ SHOULD be predictable and pleasant for both human develop
 
 #### Required Signals
 
-|       Signal      |       Description     |       Normalisation Rule      |
-| ----------------- | --------------------- | ----------------------------- |
-| `example_density`	| MUST represent richness of examples across eligible locations. | [coverage](#coverage-normalisation) |
-| `example_validity`| MUST show schema-conformance of examples. | [coverage](#coverage-normalisation) |
-| `doc_clarity`     | MUST quantify linguistic clarity of summaries and descriptions. | [min-max inverted](#minmax-inverted-normalisation) |
-| `response_coverage` |	MUST indicate presence of meaningful success and error responses. | [coverage](#coverage-normalisation)
-| `tooling_readiness` |	MUST measure ingestion/bundling health within Jentic pipelines. | [inverse error](#inverse-error-normalisation) |
+| Signal | Description | Normalisation Rule |
+| ---------------- | -------------------- | ---------------------------- |
+| `example_density` | MUST represent richness of examples across eligible locations. | [coverage](#coverage-normalisation) |
+| `example_validity` | MUST show schema-conformance of examples. | [coverage](#coverage-normalisation) |
+| `doc_clarity` | MUST quantify linguistic clarity of summaries and descriptions. | [min-max inverted](#minmax-inverted-normalisation) |
+| `response_coverage` | MUST indicate presence of meaningful success and error responses. | [coverage](#coverage-normalisation) |
+| `tooling_readiness` | MUST measure ingestion/bundling health within Jentic pipelines. | [inverse error](#inverse-error-normalisation) |
 
 
 #### Example Density (example_density)
 
-```
+```text
 example_density = present_examples / expected_examples
 ```
 
@@ -294,28 +305,28 @@ If `expected_examples = 0`, the value MUST be `1.0`.
 
 #### Example Validity (example_validity)
 
-```
+```text
 example_validity = valid_examples / total_examples
 ```
 
 #### Doc Clarity (doc_clarity)
 
-```
-doc_clarity = 1 - ((readability_score - 8) / (16 - 8))
+```text
+doc_clarity = 1- ((readability_score- 8) / (16- 8))
 ```
 
 Where readability_score ∈ [8, 16] (`8` is easy to read, `16` would be legaleses / hard to parse.). See `readability_score` definition in [Appendix A: General Definitions](#appendix-a-general-definitions).
 
 #### Response Coverage (response_coverage)
 
-```
+```text
 response_coverage = operations_with_meaningful_responses / total_operations
 ```
 
 #### Tooling Readiness (tooling_readiness)
 
-```
-tooling_readiness = max(0, 1 - (ingestion_errors / 15))
+```text
+tooling_readiness = max(0, 1- (ingestion_errors / 15))
 ```
 
 **Tooling Readiness Threshold**
@@ -323,20 +334,20 @@ Unlike structural integrity, tooling_readiness should not be treated as a correc
 
 | Tooling Ingestion Issues | Score | Interpretation |
 | ------------------------ | ----- | -------------- |
-| 0 - 3 | 0.85 - 1.0 | Easily ingested |
-| 4 - 8 | 0.6 - 0.8 | Cleanup recommended |
-| 9 - 14 | 0.3 - 0.5 | High friction |
+| 0- 3 | 0.85- 1.0 | Easily ingested |
+| 4- 8 | 0.6- 0.8 | Cleanup recommended |
+| 9- 14 | 0.3- 0.5 | High friction |
 | 15+ | 0.0 | Cannot reliably ingest |
 
 #### Dimension Score
 
-```
+```text
 DXJ = 100 × (example_density + example_validity + doc_clarity + response_c​overage + tooling_readiness) / 5
 ```
 
 ##### Example
 
-```
+```text
 example_density: 0.66       # 2/3 expected example points populated
 example_validity: 0.80      # valid & typed
 doc_clarity: 0.75           # readable, non-legalistic
@@ -353,26 +364,26 @@ ARAX evaluates whether an API is semantically interpretable by AI systems—spec
 
 #### Required Signals
 
-|       Signal      |       Description     |       Normalisation Rule      |
+| Signal | Description | Normalisation Rule |
 | ----------------- | --------------------- | ----------------------------- |
-| `summary_coverage` |	MUST represent presence of concise summaries across operations/tags/info. | [coverage](#coverage-normalisation) |
-| `description_coverage` |	MUST represent descriptive completeness across applicable API elements. | [coverage](#coverage-normalisation) |
-| `type_specificity` |	MUST quantify richness of datatype modelling. |[weighted categorical](#weighted-categorical-normalisation) |
-| `policy_presence` |	SHOULD represent inclusion of SLA/rate-limit/policy metadata. | [coverage](#coverage-normalisation)
-| `error_standardization` |	SHOULD favour structured error formats (RFC 9457/7807). | [coverage](#coverage-normalisation)
-| `opid_quality` |	MUST evaluate presence and distinctiveness of operationId values. | [composite](#composite-signal-normalisation)
-| `ai_semantic_surface` |	MAY provide bonus uplift for AI-oriented metadata. | [bonus multiplier](#bonus-multipliers) |
+| `summary_coverage` | MUST represent presence of concise summaries across operations/tags/info. | [coverage](#coverage-normalisation) |
+| `description_coverage` | MUST represent descriptive completeness across applicable API elements. | [coverage](#coverage-normalisation) |
+| `type_specificity` | MUST quantify richness of datatype modelling. | [weighted categorical](#weighted-categorical-normalisation) |
+| `policy_presence` | SHOULD represent inclusion of SLA/rate-limit/policy metadata. | [coverage](#coverage-normalisation) |
+| `error_standardization` | SHOULD favour structured error formats (RFC 9457/7807). | [coverage](#coverage-normalisation) |
+| `opid_quality` | MUST evaluate presence and distinctiveness of operationId values. | [composite](#composite-signal-normalisation) |
+| `ai_semantic_surface` | MAY provide bonus uplift for AI-oriented metadata. | [bonus multiplier](#bonus-multipliers) |
 
 
 #### Summary Coverage (summary_coverage)
 
-```
+```text
 summary_coverage = summaries_present / summaries_expected
 ```
 
 ##### Example
 
-```
+```text
 summary_coverage = 0.78  
  
 # 78% of operations/tags/info objects include a summary field
@@ -380,13 +391,13 @@ summary_coverage = 0.78
 
 #### Description Coverage (description_coverage)
 
-```
+```text
 description_coverage = described_elements / describable_elements
 ```
 
 ##### Example
 
-```
+```text
 description_coverage = 0.82 
 
 # 82% of info objects, operations, schemas, and parameters include descriptions
@@ -394,7 +405,7 @@ description_coverage = 0.82
 
 #### Type Specificity (type_specificity)
 
-```
+```text
 type_specificity =
 (
     (1.0  × strong_types)
@@ -409,7 +420,7 @@ This rewards APIs that model values semantically, not just as loosely typed stri
 
 #### Policy Presence (policy_presence)
 
-```
+```text
 policy_presence = operations_with_policy_metadata / total_operations
 ```
 
@@ -418,7 +429,7 @@ This helps AI reason about risk, performance, and operational constraints.
 
 #### Error Standardisation (error_standardisation)
 
-```
+```text
 error_standardization = operations_using_RFC9457 / total_operations
 
 ```
@@ -429,9 +440,9 @@ This is important for helping AI reason about failure modes, not just success pa
 
 #### OperationId Quality (opid_quality)
 
-```
+```text
 coverage         = ops_with_operationId / total_operations
-distinctiveness  = 1 - mean_semantic_similarity
+distinctiveness  = 1- mean_semantic_similarity
 opid_quality     = coverage × distinctiveness
 ```
 
@@ -439,13 +450,13 @@ If multiple ops appear to offer “getUser” operation, distinctiveness drops a
 
 #### AI Semantic Surface (ai_semantic_surface)
 
-```
+```text
 ai_semantic_surface_bonus = 1 + (0.05 * ai_hint_coverage)
 ```
 
 ##### Example
 
-```
+```text
 bonus = 1.015  
 
 # 30% of operations include hints like x-intent, workflows, Arazzo links
@@ -453,7 +464,7 @@ bonus = 1.015
 
 #### Dimension Score
 
-```
+```text
 core_arax = (summary_coverage + description_coverage + type_specificity + policy_presence + error_standardization + opid_quality) / 6
 
 ARAX = 100 × core_arax × (1 + 0.05 × ai_semantic_surface)
@@ -461,7 +472,7 @@ ARAX = 100 × core_arax × (1 + 0.05 × ai_semantic_surface)
 
 ##### Example
 
-```
+```text
 summary_coverage: 0.80         # 80% described
 description_coverage: 0.82     # 82% described
 type_specificity: 0.76         # formats & enums used meaningfully
@@ -485,25 +496,25 @@ Agent Usability evaluates whether autonomous agents can operate the API reliably
 
 #### Required Signals
 
-|       Signal      |       Description     |       Normalisation Rule      |
+| Signal | Description | Normalisation Rule |
 | ----------------- | --------------------- | ----------------------------- |
-| `complexity_comfort` |	Measures document size, endpoint density, and schema complexity, penalised using a logistic curve. | [logistic shaping](#logistic-shaping) |
-| `distinctiveness` |	MUST quantify semantic separation between operations. | inverse [semantic similarity](#semantic-similarity) |
-| `pagination` |	MUST represent the ration of paginated GET resources. | [coverage](#coverage-normalisation) |
+| `complexity_comfort` | Measures document size, endpoint density, and schema complexity, penalised using a logistic curve. | [logistic shaping](#logistic-shaping) |
+| `distinctiveness` | MUST quantify semantic separation between operations. | inverse [semantic similarity](#semantic-similarity) |
+| `pagination` | MUST represent the ration of paginated GET resources. | [coverage](#coverage-normalisation) |
 | `hypermedia_support` | HATEOAS/JSON:API/HAL affordances. | [coverage](#coverage-normalisation) |
-| `intent_legibility` |	MUST represent verb-object semantic clarity. | [similarity](#semantic-similarity) (LLM assisted) |
-| `safety` |	MUST evaluate idempotency & sensitive operation protection. | [heuristic penalty](#heuristic-penalty-normalisation) |
-| `tool_calling_alignment` |	SHOULD represent alignment with LLM tool-calling expectations. | [coverage](#coverage-normalisation) |
-| `navigation` | MUST represent pagination & hypermedia affordances. | [composite](#composite-signal-normalisation) | 
+| `intent_legibility` | MUST represent verb-object semantic clarity. | [similarity](#semantic-similarity) (LLM assisted) |
+| `safety` | MUST evaluate idempotency & sensitive operation protection. | [heuristic penalty](#heuristic-penalty-normalisation) |
+| `tool_calling_alignment` | SHOULD represent alignment with LLM tool-calling expectations. | [coverage](#coverage-normalisation) |
+| `navigation` | MUST represent pagination & hypermedia affordances. | [composite](#composite-signal-normalisation) |
 
 
 #### Complexity Comfort (complexity_comfort)
 
-```
+```text
 raw_complexity = 0.5 × normalised_endpoint_count
                + 0.5 × normalised_schema_depth
 
-complexity_comfort = 1 / (1 + exp(6 × (raw_complexity - 0.45)))
+complexity_comfort = 1 / (1 + exp(6 × (raw_complexity- 0.45)))
 ```
 
 ##### Normalised Endpoint Count (normalised_endpoint_count)
@@ -513,13 +524,15 @@ A normalised measure of how large an API is relative to a typical operational co
 API usability for agents degrades as endpoint count grows — but only after a certain point. A 3-endpoint API and a 12-endpoint API should not have radically different usability penalties. But a 200-endpoint platform should carry a greater complexity signal.
 
 **Formula:**
-```
+
+```text
 normalised_endpoint_count = min(1, total_operations / endpoint_baseline)
 ```
 
 Where:
- - `total_operations` = count of unique operations (method + path pairs)
- - `endpoint_baseline` = 50
+
+- `total_operations` = count of unique operations (method + path pairs)
+- `endpoint_baseline` = 50
 
 ##### Normalised Schema Depth (normalised_schema_depth)
 
@@ -528,42 +541,44 @@ A normalised indicator of schema nesting and structure depth across request/resp
 Agent reasoning difficulty can be correlated to object depth, degree of polymorphism, and highly nested schemas.
 
 **Formula:**
-```
+
+```text
 normalised_schema_depth = min(1, max_schema_depth / depth_baseline)
 ```
 
 Where:
- - `max_schema_depth` = deepest nesting found across all schemas
- - `depth_baseline` = 8
+
+- `max_schema_depth` = deepest nesting found across all schemas
+- `depth_baseline` = 8
 
 #### Distinctiveness (distinctiveness)
 
-```
-distinctiveness = 1 - avg_semantic_similarity
+```text
+distinctiveness = 1- avg_semantic_similarity
 ```
 
 #### Pagination (pagination)
 
-```
+```text
 pagination = paginated_collection_GETs / collection_GETs
 ```
 
 #### Hypermedia Support (hypermedia_support)
 
-```
+```text
 hypermedia_support = hypermedia_responses / total_navigable_responses
 ```
 
 #### Navigation (navigation)
 
-```
+```text
 navigation_readiness = (0.6 × pagination) + (0.4 × hypermedia_support)
 navigation = navigation_readiness × (1 + 0.03 × links_coverage)
 ```
 
 ##### Example
 
-```
+```text
 navigation = 0.443         # usable navigation with modest hint enrichment
 
 pagination = 0.60          # 60% of eligible list endpoints are paginated
@@ -575,7 +590,7 @@ links_bonus = 1.0075       # 25% of responses include link relations
 
 #### Intent Legibility (intent_legibility)
 
-```
+```text
 intent_legibility = mean_semantic_alignment
 ```
 
@@ -588,19 +603,19 @@ For `intent_legibility`, each operation is compared to a set of canonical verb-o
 
 #### Safety (safety)
 
-```
+```text
 safety = ((idempotent_correctness + sensitive_ops_protected) / (2 * total_operations))
 ```
 
 #### Tool Calling Alignment (tool_calling_alignment)
 
-```
+```text
 tool_calling_alignment = operations_mappable_to_ai_tool_calls / total_operations
 ```
 
 #### Dimension Score
 
-```
+```text
 # Pagination and hypermedia combine into `navigation` (with links bound [0,1]).
 navigation_readiness = 0.6 * pagination + 0.4 * hypermedia_support
 navigation = navigation_readiness * (1 + 0.03 * links_coverage)
@@ -611,7 +626,7 @@ AU = 100 ×(complexity_comfort + distinctiveness + navigation + intent_legibilit
 
 ##### Example
 
-```
+```text
 complexity_comfort: 0.74       # logistic-shaped
 distinctiveness: 0.71          # low semantic collision
 pagination: 0.60               # most list GETs paginated
@@ -639,63 +654,65 @@ This dimension measures authentication coverage, secret hygiene, transport secur
 
 #### Required Signals
 
-|       Signal      |       Description     |       Normalisation Rule      |
+| Signal | Description | Normalisation Rule |
 | ----------------- | --------------------- | ----------------------------- |
-| `auth_coverage` |	Evaluates whether authentication is correctly applied to sensitive or modifying operations, using intent-aware heuristics. | [heuristic penalty](#heuristic-penalty-normalisation) |
-| `auth_strength` |	MUST evaluate strength of security schemes. | [weighted categorical](#weighted-categorical-normalisation) |
-| `transport_security` |	MUST require HTTPS for externally exposed hosts. | [binary](#binary-checks) |
-| `secret_hygiene` |	MUST detect and penalise hardcoded credentials. | [binary](#binary-checks) |
-| `sensitive_handling` |	MUST score protection of PII/sensitive fields. | [coverage ratio](#coverage-normalisation) |
-| `owasp_posture` |	SHOULD reflect severity-weighted risk findings. | [severity weighted inverse](#severity-weighted-inverse) with dampening |
+| `auth_coverage` | Evaluates whether authentication is correctly applied to sensitive or modifying operations, using intent-aware heuristics. | [heuristic penalty](#heuristic-penalty-normalisation) |
+| `auth_strength` | MUST evaluate strength of security schemes. | [weighted categorical](#weighted-categorical-normalisation) |
+| `transport_security` | MUST require HTTPS for externally exposed hosts. | [binary](#binary-checks) |
+| `secret_hygiene` | MUST detect and penalise hardcoded credentials. | [binary](#binary-checks) |
+| `sensitive_handling` | MUST score protection of PII/sensitive fields. | [coverage ratio](#coverage-normalisation) |
+| `owasp_posture` | SHOULD reflect severity-weighted risk findings. | [severity weighted inverse](#severity-weighted-inverse) with dampening |
 
 #### Auth Coverage (auth_coverage)
 
-```
+```text
 auth_coverage = protected_sensitive_ops / sensitive_ops_expected
 ```
 
-If no operations require auth then `auth_coverage = 1`. 
-Auth requirements are intent-aware, not “all ops”. LLM reasoning MAY be leverage to determine intent-awareness.
+If no operations require auth then `auth_coverage = 1`. Auth requirements are intent-aware, not “all ops”. LLM reasoning MAY be leverage to determine intent-awareness.
 
 #### Auth Strength (auth_strength)
 
-```
+```text
 auth_strength = average_strength_of_security_schemes
 ```
 
 Where:
- - none/basic: `0.0 - 0.2`
- - API Key: `0.5`
- - OAuth 2+ (and not obsolete type): `0.85`
- - OIDC + scopes: `1.0`
+
+- none/basic: `0.0- 0.2`
+- API Key: `0.5`
+- OAuth 2+ (and not obsolete type): `0.85`
+- OIDC + scopes: `1.0`
 
 #### Transport Security (transport_security)
 
-```
+```text
 transport_security = secure_public_endpoints / public_endpoints
 ```
 
 Transport security is evaluated only for endpoints intended to be externally reachable. Internal, localhost, cluster, or sandbox endpoints are excluded from the penalty. The score is based on whether externally exposed endpoints use HTTPS.
 
 Public endpoints include:
- - FQDN-based hosts (e.g., api.example.com)
- - Partner-facing or customer-facing URLs
- - Any endpoint not explicitly marked internal
+
+- FQDN-based hosts (e.g., api.example.com)
+- Partner-facing or customer-facing URLs
+- Any endpoint not explicitly marked internal
 
 Internal endpoints include:
- - localhost / 127.0.0.*
- - service mesh / `.internal` / `.cluster` hosts
- - explicitly flagged `x-internal`, `dev`, `sandbox`, `mock`
+
+- localhost / 127.0.0.*
+- service mesh / `.internal` / `.cluster` hosts
+- explicitly flagged `x-internal`, `dev`, `sandbox`, `mock`
 
 #### Secret Hygiene (secret_hygiene)
 
-```
+```text
 secret_hygiene = 1 if no secrets embedded else 0
 ```
 
 #### Sensitive Handling (sensitive_handling)
 
-```
+```text
 sensitive_handling = protected_pii_fields / detected_pii_fields
 ```
 
@@ -703,9 +720,9 @@ If no PII detected, = 1.0.
 
 #### OWASP Posture (owasp_posture)
 
-```
+```text
 weighted_cost = (1.0 × critical) + (0.6 × errors) + (0.025 × warnings) + (0.005 × info)
-owasp_posture = max(0, 1 - (sqrt(weighted_cost) / 5))
+owasp_posture = max(0, 1- (sqrt(weighted_cost) / 5))
 ```
 
 
@@ -713,7 +730,8 @@ owasp_posture = max(0, 1 - (sqrt(weighted_cost) / 5))
 #### Dimension Score
 
 ##### Base Security
-```
+
+```text
 base_security = (auth_coverage + auth_strength + transport_security +
                  secret_hygiene + sensitive_handling + owasp_posture) / 6
 
@@ -722,50 +740,52 @@ base_security = (auth_coverage + auth_strength + transport_security +
 ##### Sensitivity Factor
 
 Based on the intent of an operation / endpoint, we determine `sensitivity_factor` as:
- - None/Low: 1.0
- - Moderate: 0.9
- - High: 0.75
+
+- None/Low: 1.0
+- Moderate: 0.9
+- High: 0.75
 
 
 ##### Exposure Factor
 
 Based on the intended audience or exposure of an endpoint, we determine `exposure_factor` as:
- - internal: 1.0
- - partner: 0.9
- - public: 0.8
+
+- internal: 1.0
+- partner: 0.9
+- public: 0.8
 
 
 ##### Scaled Security Score
 
-```
+```text
 security_scaled = base_security × sensitivity_factor × exposure_factor
 
 Where:
- - sensitivity_factor ∈ {1.00, 0.90, 0.75}
- - exposure_factor    ∈ {1.00, 0.90, 0.80}
+- sensitivity_factor ∈ {1.00, 0.90, 0.75}
+- exposure_factor    ∈ {1.00, 0.90, 0.80}
 ```
 
 ##### Gating
 
 Gating caps apply after scaling
 
-| Condition | Cap       |
+| Condition | Cap |
 | --------- | --------- |
 | Hardcoded credentials | ≤ 20 |
 | Sensitive op w/o auth | ≤ 40 |
 | PII unprotected & non-internal | ≤ 50 |
 | Public HTTP, not HTTPS | ×0.8 multiplier |
 
-##### Security Formula:
+##### Security Formula
 
-```
+```text
 SEC = 100 × Security_final
 # where security_final is security_scaled after capping rules
 ```
 
 ###### Example
 
-```
+```text
 auth_coverage: 0.85
 auth_strength: 0.80
 transport_security: 1.00     # all https
@@ -787,13 +807,13 @@ The scoring framework does NOT hide unsafe APIs, but we apply a risk-aware disco
 
 #### Required Signals
 
-|       Signal      |       Description     |       Normalisation Rule      |
+| Signal | Description | Normalisation Rule |
 | ----------------- | --------------------- | ----------------------------- |
-| `descriptive_richness` |	MUST assess depth and clarity of descriptions. | [coverage](#coverage-normalisation) with semantic weights|
-| `intent_phrasing` |	MUST evaluate verb-object clarity of summaries and descriptions. | [semantic similarity](#semantic-similarity) (LLM assisted)|
-| `workflow_context` |	MAY include Arazzo/MCP/workflow references. | [coverage](#coverage-normalisation)  | 
-| `registry_signals` |	SHOULD detect llms.txt, APIs.json, MCP, externalDocs. | [coverage](#coverage-normalisation) (multi-indicator) |
-| `domain_tagging` |	SHOULD detect domain/taxonomy classification. | [coverage](#coverage-normalisation) |
+| `descriptive_richness` | MUST assess depth and clarity of descriptions. | [coverage](#coverage-normalisation) with semantic weights |
+| `intent_phrasing` | MUST evaluate verb-object clarity of summaries and descriptions. | [semantic similarity](#semantic-similarity) (LLM assisted) |
+| `workflow_context` | MAY include Arazzo/MCP/workflow references. | [coverage](#coverage-normalisation) |
+| `registry_signals` | SHOULD detect llms.txt, APIs.json, MCP, externalDocs. | [coverage](#coverage-normalisation) (multi-indicator) |
+| `domain_tagging` | SHOULD detect domain/taxonomy classification. | [coverage](#coverage-normalisation) |
 
 
 #### Descriptive Richness (descriptive_richness)
@@ -801,15 +821,16 @@ The scoring framework does NOT hide unsafe APIs, but we apply a risk-aware disco
 The descriptive_richness signal evaluates the semantic value of textual descriptions within an API description. It measures whether descriptions are sufficiently clear and detailed for AI systems to infer purpose, behaviour, and domain context.
 
 Applies to all describable elements, including but not limited to:
- - `info.description`
- - `info.summary`
- - operation-level `summary` and `description`
- - parameter, header, and response descriptions
- - schema descriptions
+
+- `info.description`
+- `info.summary`
+- operation-level `summary` and `description`
+- parameter, header, and response descriptions
+- schema descriptions
 
 Elements MAY be excluded if they cannot reasonably carry semantic meaning (e.g., empty marker schemas).
 
-```
+```text
 descriptive_richness = Σ(element_descriptive_score) / (2 × number_of_describable_elements)
 
 # Each describable element MAY earn up to 2 points (1 for clarity + 1 for depth)
@@ -846,11 +867,12 @@ Descriptions providing actionable content SHALL receive higher depth scores.
 | **Low depth**    | Generic text without meaningful semantics or context      | **0.0** |
 
 Depth SHOULD consider:
- - domain-specific terminology (e.g., “booking segment”, “AML profile”)
- - entity relationships
- - state constraints and lifecycle behaviour
- - when/why an operation SHOULD be called
- - key field semantics or constraints
+
+- domain-specific terminology (e.g., “booking segment”, “AML profile”)
+- entity relationships
+- state constraints and lifecycle behaviour
+- when/why an operation SHOULD be called
+- key field semantics or constraints
 
 Descriptions that merely restate a field name or summary MUST be scored at 0.0.
 
@@ -861,38 +883,39 @@ Descriptions that merely restate a field name or summary MUST be scored at 0.0.
 
 #### Workflow Context (workflow_context)
 
-```
+```text
 workflow_context = operations_with_workflow_refs / total_operations
 ```
 
 #### Registry Signals (registry_signals)
 
 Presence of machine-readable artifacts such as:
- - llms.txt
- - APIs.json
- - API Gateway registry metadata
- - MCP registry metadata
- - externalDocs link to developer portals etc.
 
-```
+- llms.txt
+- APIs.json
+- API Gateway registry metadata
+- MCP registry metadata
+- externalDocs link to developer portals etc.
+
+```text
 registry_signals = present_indicators / total_indicators
 ```
 
 #### Domain Tagging (domain_tagging)
 
-```
+```text
 domain_tagging = ops_with_domain_tags / total_operations
 ```
 
 #### Dimension Score
 
-```
+```text
 AID_raw = 100 ×(descriptive_richness + intent_phrasing + workflow_context + registry_signals + domain_tagging)/5
 ```
 
-**Soft Risk Discount**
+##### Soft Risk Discount
 
-```
+```text
 risk_index
 = exposure_weight × sensitivity_weight × (1−base_security) 
 
@@ -903,7 +926,7 @@ AID = AIDraw × risk_discount
 
 ##### Example
 
-```
+```text
 descriptive_richness: 0.80
 intent_phrasing: 0.75
 workflow_context: 0.20
@@ -915,8 +938,8 @@ Security from above gave base_security ≈ 0.833;
 
 exposure_weight: 1.0   # public
 sensitivity_weight: 0.9
-risk_index = 1.0 * 0.9 * (1 - 0.833) = 0.1503
-risk_discount = 1 - (0.5 * 0.1503) ≈ 0.9248
+risk_index = 1.0 * 0.9 * (1- 0.833) = 0.1503
+risk_discount = 1- (0.5 * 0.1503) ≈ 0.9248
 
 AID ≈ 55.0 * 0.9248 ≈ 50.8
 ```
@@ -935,12 +958,13 @@ Coverage is used when measuring presence versus absence of some feature (e.g., s
 
 **Formula:**
 
-```
+```text
 coverage = present / expected
 ```
 
 If there are _zero expected occurrences, then:
-```
+
+```text
 coverage = 1.0
 ```
 
@@ -951,25 +975,28 @@ This prevents false penalties where the concept is not applicable.
 Used when the presence of errors decreases quality (linting findings, structural issues, ingestion errors).
 
 **Formula:**
-```
-inverse = max(0, 1 - (issue_count / threshold))
+
+```text
+inverse = max(0, 1- (issue_count / threshold))
 ```
 
-**Notes:**
- - `threshold` represents the point where the score SHOULD drop to zero. Thresholds are dimension-specific.
- - Once `issue_count ≥ threshold`, the signal is floored at 0.
+Notes:
+
+- `threshold` represents the point where the score SHOULD drop to zero. Thresholds are dimension-specific.
+- Once `issue_count ≥ threshold`, the signal is floored at 0.
 
 ### Min–Max Inverted Normalisation
 
 Applied when lower input values are better (e.g., readability burden).
 
 **Formula:**
-```
-inverted = 1 - (x - min) / (max - min)
+
+```text
+inverted = 1- (x- min) / (max- min)
 ```
 
- - If `x ≤ min`, then `inverted = 1.0`.
- - If `x ≥ max`, then `inverted = 0.0`.
+- If `x ≤ min`, then `inverted = 1.0`.
+- If `x ≥ max`, then `inverted = 0.0`.
 
 ### Weighted Categorical Normalisation
 
@@ -978,7 +1005,8 @@ Used for discrete categories that map to quality levels (e.g., security scheme s
 Each category is assigned a weight in **[0, 1]**. This allows qualitative or enumerated factors to be converted into normalized numeric values.
 
 **Formula:**
-```
+
+```text
 weighted = category_weight / max_weight
 ```
 
@@ -990,7 +1018,7 @@ Used when a signal is derived from multiple measurable sub-signals (e.g., operat
 
 **Formula:**
 
-```
+```text
 composite = Σ(sub_score[i] × weight[i]) / Σ(weight[i])
 
 # Example for illustration:
@@ -1005,14 +1033,14 @@ Applies weighted penalties for different severity levels.
 
 **Formula:**
 
-```
+```text
 weighted_cost =
     (1.0  × critical)
   + (0.6  × errors)
   + (0.025 × warnings)
   + (0.005 × info)
 
-signal = max(0, 1 - (weighted_cost / max_cost))
+signal = max(0, 1- (weighted_cost / max_cost))
 ```
 
 Where `max_cost` is an upper bound chosen per dimension (e.g., 25 for foundational lint).
@@ -1022,31 +1050,34 @@ Where `max_cost` is an upper bound chosen per dimension (e.g., 25 for foundation
 Used where a smooth decline is preferred rather than linear penalty (e.g., structural complexity).
 
 **Formula:**
-```
-log_dampened = 1 - ( logBaseN(1 + issues) / logBaseN(1 + threshold) )
+
+```text
+log_dampened = 1- ( logBaseN(1 + issues) / logBaseN(1 + threshold) )
 ```
 
 Where:
- - Base MAY be _10_ or _e_, depending on implementation preference. RECOMMENDATION is _10_ for easier understanding.
- - Provides early penalty, slower collapse near threshold.
+
+- Base MAY be _10_ or _e_, depending on implementation preference. RECOMMENDATION is _10_ for easier understanding.
+- Provides early penalty, slower collapse near threshold.
 
 ### Semantic Similarity
 
-```
+```text
 similarity(i, j) ∈ [0, 1]
-distinctiveness = 1 - similarity
+distinctiveness = 1- similarity
 ```
 
 Similarity is computed from a combination of:
- - operationId
- - summary
- - description
- - path + HTTP method
- - optional LLM semantic embedding comparison
+
+- operationId
+- summary
+- description
+- path + HTTP method
+- optional LLM semantic embedding comparison
 
 Weighted approach:
 
-```
+```text
 similarity(i, j) =
     0.35 * embedding_similarity
   + 0.25 * opId_similarity
@@ -1057,32 +1088,36 @@ similarity(i, j) =
 Where similarity = cosine similarity or Levenshtein-based fallback for small APIs.
 
 The evaluator MUST ensure:
- - identical or near-identical meanings → similarity ≥ 0.85
- - opposites or different purposes → similarity ≤ 0.20
+
+- identical or near-identical meanings → similarity ≥ 0.85
+- opposites or different purposes → similarity ≤ 0.20
 
 ### Logistic Shaping
 
 Used to avoid over-penalising large APIs for complexity if they are well-structured.
 
 **Formula:**
-```
-logistic = 1 / (1 + exp(k × (value - midpoint)))
+
+```text
+logistic = 1 / (1 + exp(k × (value- midpoint)))
 ```
 
- - `k` controls steepness (recommended: 5–7).
- - `midpoint` defines neutrality point (recommended: ~0.4–0.5).
+- `k` controls steepness (recommended: 5–7).
+- `midpoint` defines neutrality point (recommended: ~0.4–0.5).
 
 ### Binary Checks
 
 Used when a single violation SHOULD drop a score to zero or one.
 
 Examples:
- - hardcoded credentials
- - presence/absence of HTTPS
- - presence of required auth
+
+- hardcoded credentials
+- presence/absence of HTTPS
+- presence of required auth
 
 **Formula:**
-```
+
+```text
 binary = 1 if condition_passes else 0
 ```
 
@@ -1091,13 +1126,15 @@ binary = 1 if condition_passes else 0
 Used when optional metadata adds value especially in terms of agent usability and AI-discoverability (e.g., hypermedia links, AI intent hints, registry presence).
 
 **Formula:**
-```
+
+```text
 score = base_score * (1 + bonus_factor * coverage)
 ```
 
 Where:
- - `bonus_factor` typically ∈ [0.01, 0.10]
- - `coverage` is a normalised [0, 1] value
+
+- `bonus_factor` typically ∈ [0.01, 0.10]
+- `coverage` is a normalised [0, 1] value
 
 Bonus MUST NOT push the signal above 1.0 after dimension aggregation.
 
@@ -1106,28 +1143,32 @@ Bonus MUST NOT push the signal above 1.0 after dimension aggregation.
 Used when sensitivity or exposure magnifies or attenuates risk.
 
 **Formula:**
-```
+
+```text
 scaled = base_score × sensitivity_factor × exposure_factor
 ```
 
 Where:
- - sensitivity_factor ∈ {1.0, 0.9, 0.75}
- - exposure_factor ∈ {1.0, 0.9, 0.8}
+
+- sensitivity_factor ∈ {1.0, 0.9, 0.75}
+- exposure_factor ∈ {1.0, 0.9, 0.8}
 
 ### Heuristic Penalty Normalisation
 
 Used when qualitative rule-based deductions apply (e.g., unsafe idempotency patterns).
 
 **Formula:**
-```
-score = 1.0 - Σ(penalty[i] × severity_weight[i])
+
+```text
+score = 1.0- Σ(penalty[i] × severity_weight[i])
 ```
 
 Clamped to **[0, 1]**.
 
 **Example:**
-```
-# Agent Usability - safety:
+
+```text
+# Agent Usability- safety:
 # An API begins with a score of 1.0, then receives deductions for risk findings:
 #  Missing auth on sensitive write: −0.15
 #  Non-idempotent PUT/DELETE: −0.10
@@ -1142,15 +1183,17 @@ safety = 1 − ( 0.15 + 0.10 + 0.05 )
 Applied in Discoverability scoring when security posture SHOULD diminish visibility, not erase it.
 
 **Formula:**
-```
-risk_discount = 1 - (0.5 × risk_index)
+
+```text
+risk_discount = 1- (0.5 × risk_index)
 ```
 
 Clamped to `[0.6, 1.0]`, to avoid total suppression.
 
 Where:
-```
-risk_index = exposure_weight × sensitivity_weight × (1 - base_security)
+
+```text
+risk_index = exposure_weight × sensitivity_weight × (1- base_security)
 ```
 
 ## Scoring Model & Formulae
@@ -1160,21 +1203,24 @@ This section NORMATIVELY defines how signals, dimensions, and the final AI-Readi
 ### Scoring Pipeline
 
 The scoring process MUST proceed in the following order:
- - Raw Measurements (unbounded counts, coverage, structural errors, semantic density, etc.)
- - Normalised Signals (each MUST be converted to a value ∈ [0,1])
- - Dimension Scores (each MUST be computed on a 0–100 scale)
- - Weighted Aggregation (weighted harmonic mean MUST be used)
- - Gating Rules (MUST be applied BEFORE readiness level classification)
- - Final Readiness Score (0–100)
- - Readiness Level Classification
+
+- Raw Measurements (unbounded counts, coverage, structural errors, semantic density, etc.)
+- Normalised Signals (each MUST be converted to a value ∈ [0,1])
+- Dimension Scores (each MUST be computed on a 0–100 scale)
+- Weighted Aggregation (weighted harmonic mean MUST be used)
+- Gating Rules (MUST be applied BEFORE readiness level classification)
+- Final Readiness Score (0–100)
+- Readiness Level Classification
 
 ### Normalised Signals
+
 JAIRF requires each signal to be normalised to a number on the interval [0,1].
 Signal normalisation rules are defined in Appendix A, and MUST be applied consistently across all implementations.
 
 A signal value of:
- - `1.0` MUST represent optimal quality
- - `0.0` MUST represent unusable, absent, contradictory, or failing input
+
+- `1.0` MUST represent optimal quality
+- `0.0` MUST represent unusable, absent, contradictory, or failing input
 
 Signals MUST NOT exceed the range [0,1] after normalisation.
 
@@ -1182,14 +1228,15 @@ Signals MUST NOT exceed the range [0,1] after normalisation.
 
 Each dimension score MUST be the arithmetic mean of its normalised signals:
 
-```
+```text
 DimensionScore = 100 × (Σ normalised_signals) / (count_of_signals)
 ```
 
 Where:
- - All signals MUST be normalised first
- - All signals MUST contribute equally (v1.0 does NOT use per-signal weighting)
- - Result MUST be clamped into the range [0,100]
+
+- All signals MUST be normalised first
+- All signals MUST contribute equally (v1.0 does NOT use per-signal weighting)
+- Result MUST be clamped into the range [0,100]
 
 Implementations MAY emit warnings if insufficient data is present (e.g., zero expected counts across multiple signals) but MUST NOT penalise a dimension for irrelevance.
 
@@ -1197,14 +1244,14 @@ Implementations MAY emit warnings if insufficient data is present (e.g., zero ex
 
 The JAIRF final score MUST use the following weight distribution across the six dimensions:
 
-| Dimension	 | Weight |
-| ---------- | ------ |
-|Foundational Compliance (FC) |	0.16 |
-|Developer Experience & Jentic Compatibility (DXJ) |	0.18 |
-|AI-Readiness & Agent Experience (ARAX)	| 0.24 |
-|Agent Usability (AU) |	0.20 |
-|Security (SEC)	| 0.12 |
-|AI Discoverability (AID) |	0.10 |
+| Dimension | Weight |
+| --------- | ------ |
+| Foundational Compliance (FC) | 0.16 |
+| Developer Experience & Jentic Compatibility (DXJ) | 0.18 |
+| AI-Readiness & Agent Experience (ARAX) | 0.24 |
+| Agent Usability (AU) | 0.20 |
+| Security (SEC) | 0.12 |
+| AI Discoverability (AID) | 0.10 |
 
 These weights MUST sum to `1.0`.
 
@@ -1215,20 +1262,21 @@ The harmonic mean MUST be used to enforce that weaknesses in one dimension CANNO
 
 Implementations MUST compute:
 
-```
+```text
 FinalScore = (Σ weights) / (Σ (weight / (dimensionScore + epsilon)))
 ```
 
 Where:
- - `epsilon` MUST be a small positive constant to avoid division-by-zero. Recommended: epsilon = 0.000001
- - `dimensionScore` MUST be in the range [0,100] before inclusion in the harmonic calculation
- - The final score MUST also be clamped to [0,100]
+
+- `epsilon` MUST be a small positive constant to avoid division-by-zero. Recommended: epsilon = 0.000001
+- `dimensionScore` MUST be in the range [0,100] before inclusion in the harmonic calculation
+- The final score MUST also be clamped to [0,100]
 
 The harmonic mean MUST be considered core to the JAIRF model.
 
 ### Gating Rules
 
-Gating rules MUST override or constrain dimension scores to ensure safety and correctness. 
+Gating rules MUST override or constrain dimension scores to ensure safety and correctness.
 They MUST be applied immediately before readiness-level classification.
 
 | Condition | Effect |
@@ -1236,8 +1284,8 @@ They MUST be applied immediately before readiness-level classification.
 | Foundational Compliance score < 40 | API MUST be classified as Level 0 ("Non-Compliant") |
 | Hardcoded credentials detected | Security score MUST be capped at `20` |
 | Sensitive operations lacking auth | Security score MUST be capped at `40` |
-| Unprotected PII on partner/public APIs| Security score MUST be capped at 50|
-| Non-TLS public endpoints| Security score MUST be multiplied by `0.8` |
+| Unprotected PII on partner/public APIs | Security score MUST be capped at 50 |
+| Non-TLS public endpoints | Security score MUST be multiplied by `0.8` |
 
 Gating MUST NOT alter the raw signals or other dimension scores directly; gating applies only to the affected dimension score.
 
@@ -1282,12 +1330,12 @@ Grades SHOULD NOT be used as substitutes for readiness levels.
 
 ## Appendix A: General Definitions
 
-| Term              | Description |
-|-------------------|-------------|
+| Term | Description |
+| ----------------- | ------------ |
 | **Normalisation** | The process of converting raw measurements into a standard 0–1 scale so that different signals can be compared fairly. A normalised value of 1 represents “ideal” and 0 represents “unusable or absent.” |
-| **Signal**        | A measurable property inside a dimension (e.g., `auth_coverage` or `summary_coverage`). Dimensions are made of multiple signals, and each signal is normalised before aggregation. |
-| **Dimension**     | A thematic scoring category of API readiness (e.g., Foundational Compliance, AI-Readiness). Each dimension reflects a different aspect of what makes an API usable by AI systems. |
-| **Aggregation**   | The step where multiple normalised signals are mathematically combined into a single score. Aggregation happens first at the dimension level, and then across all dimensions for the final score. |
+| **Signal** | A measurable property inside a dimension (e.g., `auth_coverage` or `summary_coverage`). Dimensions are made of multiple signals, and each signal is normalised before aggregation. |
+| **Dimension** | A thematic scoring category of API readiness (e.g., Foundational Compliance, AI-Readiness). Each dimension reflects a different aspect of what makes an API usable by AI systems. |
+| **Aggregation** | The step where multiple normalised signals are mathematically combined into a single score. Aggregation happens first at the dimension level, and then across all dimensions for the final score. |
 | **Harmonic Mean** | A type of average that penalises imbalanced scores. If one dimension is very weak, the harmonic mean reduces the overall score more than a standard average would. Used to ensure that no single “strong” category can mask a critical weakness in another. |
 | **Clamped or Bounded** | When a value is restricted to remain within a minimum and maximum range. For example, `risk_discount ∈ [0.6, 1.0]` means it cannot go below 0.6 or above 1.0. |
 | **Weighted** | A calculation where some values count more than others. Weights may allow emphasis (e.g., security > discovery). |

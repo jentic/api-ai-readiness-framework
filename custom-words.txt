@@ -9,6 +9,7 @@ Flesch
 HATEOAS
 JAIRF
 Jentic
+Kilcommins
 Kincaid
 llm
 llms

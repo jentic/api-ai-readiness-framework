@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "format:markdown": "markdownlint-cli2 --config spec.markdownlint.yaml --fix '**/*.md'",
-    "lint:markdown": "markdownlint-cli2 --config spec.markdownlint.yaml '**/*.md'",
-    "spell:check": "cspell --config ./.cspell.json '**/*.md'",
+    "format:markdown": "markdownlint-cli2 --config spec.markdownlint.yaml --fix '**/*.md' \"!node_modules/**\"",
+    "lint:markdown": "markdownlint-cli2 --config spec.markdownlint.yaml '**/*.md' \"!node_modules/**\"",
+    "spell:check": "cspell --config ./.cspell.json '**/*.md' \"!node_modules/**\"",
     "validate": "npm run lint:markdown && npm run spell:check"
   },
   "repository": {

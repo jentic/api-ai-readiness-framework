@@ -21,7 +21,7 @@ JAIRF is published as a Markdown specification designed for adoption, extension,
 
 ## Reference Implementation
 
-Head over to https://jentic.com/api-score-preview, to see AI-readiness scoring in action.
+Head over to [Jentic API AI-Readiness Scoring](https://jentic.com/api-score-preview) page, to see AI-readiness scoring in action.
 
 ## Maintainers
 
