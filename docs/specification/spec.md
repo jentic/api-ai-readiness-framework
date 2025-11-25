@@ -531,8 +531,10 @@ normalised_endpoint_count = min(1, total_operations / endpoint_baseline)
 
 Where:
 
-- `total_operations` = count of unique operations (method + path pairs)
-- `endpoint_baseline` = 50
+- `total_operations` is the count of unique forward-callable operations (method + path pairs). [Callbacks](https://spec.openapis.org/oas/v3.2.0.html#callback-object) and [webhooks](https://spec.openapis.org/oas/v3.2.0.html#oas-webhooks) MUST NOT be counted as endpoints.
+- `endpoint_baseline` is set at `50`.
+
+
 
 ##### Normalised Schema Depth (normalised_schema_depth)
 
@@ -548,8 +550,10 @@ normalised_schema_depth = min(1, max_schema_depth / depth_baseline)
 
 Where:
 
-- `max_schema_depth` = deepest nesting found across all schemas
-- `depth_baseline` = 8
+- `max_schema_depth` is the deepest nesting found across all schemas
+- `depth_baseline` is set at `8`.
+
+Schemas referenced by callbacks/webhooks MUST be included in `normalised_schema_depth`, because they contribute to the overall semantic model complexity.
 
 #### Distinctiveness (distinctiveness)
 
