@@ -116,9 +116,9 @@ A human-interpretable categorization mapped from the final readiness score:
 | Level | Range | Interpretation |
 | --- | --- | --- |
 | Level 0 | `< 40` | Not Ready |
-| Level 1 | `40- 60` | Foundational |
-| Level 2 | `60- 75` | AI-Aware |
-| Level 3 | `75- 90` | AI-Ready |
+| Level 1 | `40 - 60` | Foundational |
+| Level 2 | `60 - 75` | AI-Aware |
+| Level 3 | `75 - 90` | AI-Ready |
 | Level 4 | `> 90` | Agent-Optimized |
 
 ### Grading
@@ -212,8 +212,8 @@ An API MUST NOT be considered AI-ready if it fails foundational parsing or conta
 #### Spec Validity (spec_validity)
 
 ```text
-spec_validity = 1  if specification parses successfully  
-spec_validity = 0  otherwise
+spec_validity = 1  # if specification parses successfully  
+spec_validity = 0  # otherwise
 ```
 
 #### Resolution Completeness (resolution_completeness)
@@ -238,13 +238,13 @@ This signal leverages core ruleset of Spectral and Redocly, with Jentic opinions
 ```text
 weighted_cost = SQRT((1.0 * critical) + (0.6 * errors) + (0.025 * warnings) + (0.005 * info))
 
-lint_results = max(0, 1- (weighted_cost / 25))
+lint_results = max(0, 1 - (weighted_cost / 25))
 ```
 
 #### Structural Integrity (structural_integrity)
 
 ```text
-structural_integrity = max(0, 1- (issues / 15))
+structural_integrity = max(0, 1 - (issues / 15))
 ```
 
 **Threshold**
@@ -312,7 +312,7 @@ example_validity = valid_examples / total_examples
 #### Doc Clarity (doc_clarity)
 
 ```text
-doc_clarity = 1- ((readability_score- 8) / (16- 8))
+doc_clarity = 1 - ((readability_score - 8) / (16 - 8))
 ```
 
 Where readability_score ∈ [8, 16] (`8` is easy to read, `16` would be legaleses / hard to parse.). See `readability_score` definition in [Appendix A: General Definitions](#appendix-a-general-definitions).
@@ -334,9 +334,9 @@ Unlike structural integrity, tooling_readiness should not be treated as a correc
 
 | Tooling Ingestion Issues | Score | Interpretation |
 | ------------------------ | ----- | -------------- |
-| 0- 3 | 0.85- 1.0 | Easily ingested |
-| 4- 8 | 0.6- 0.8 | Cleanup recommended |
-| 9- 14 | 0.3- 0.5 | High friction |
+| 0 - 3 | 0.85 - 1.0 | Easily ingested |
+| 4 - 8 | 0.6 - 0.8 | Cleanup recommended |
+| 9 - 14 | 0.3 - 0.5 | High friction |
 | 15+ | 0.0 | Cannot reliably ingest |
 
 #### Dimension Score
@@ -442,7 +442,7 @@ This is important for helping AI reason about failure modes, not just success pa
 
 ```text
 coverage         = ops_with_operationId / total_operations
-distinctiveness  = 1- mean_semantic_similarity
+distinctiveness  = 1 - mean_semantic_similarity
 opid_quality     = coverage × distinctiveness
 ```
 
@@ -514,7 +514,7 @@ Agent Usability evaluates whether autonomous agents can operate the API reliably
 raw_complexity = 0.5 × normalised_endpoint_count
                + 0.5 × normalised_schema_depth
 
-complexity_comfort = 1 / (1 + exp(6 × (raw_complexity- 0.45)))
+complexity_comfort = 1 / (1 + exp(6 × (raw_complexity - 0.45)))
 ```
 
 ##### Normalised Endpoint Count (normalised_endpoint_count)
@@ -620,7 +620,7 @@ tool_calling_alignment = operations_mappable_to_ai_tool_calls / total_operations
 navigation_readiness = 0.6 * pagination + 0.4 * hypermedia_support
 navigation = navigation_readiness * (1 + 0.03 * links_coverage)
 
-AU = 100 ×(complexity_comfort + distinctiveness + navigation + intent_legibility + safety + tool_calling_alignment) / 6
+AU = 100 × (complexity_comfort + distinctiveness + navigation + intent_legibility + safety + tool_calling_alignment) / 6
 
 ```
 
@@ -722,7 +722,7 @@ If no PII detected, = 1.0.
 
 ```text
 weighted_cost = (1.0 × critical) + (0.6 × errors) + (0.025 × warnings) + (0.005 × info)
-owasp_posture = max(0, 1- (sqrt(weighted_cost) / 5))
+owasp_posture = max(0, 1 - (sqrt(weighted_cost) / 5))
 ```
 
 
@@ -977,7 +977,7 @@ Used when the presence of errors decreases quality (linting findings, structural
 **Formula:**
 
 ```text
-inverse = max(0, 1- (issue_count / threshold))
+inverse = max(0, 1 - (issue_count / threshold))
 ```
 
 Notes:
@@ -992,7 +992,7 @@ Applied when lower input values are better (e.g., readability burden).
 **Formula:**
 
 ```text
-inverted = 1- (x- min) / (max- min)
+inverted = 1 - (x - min) / (max - min)
 ```
 
 - If `x ≤ min`, then `inverted = 1.0`.
@@ -1040,7 +1040,7 @@ weighted_cost =
   + (0.025 × warnings)
   + (0.005 × info)
 
-signal = max(0, 1- (weighted_cost / max_cost))
+signal = max(0, 1 - (weighted_cost / max_cost))
 ```
 
 Where `max_cost` is an upper bound chosen per dimension (e.g., 25 for foundational lint).
@@ -1052,7 +1052,7 @@ Used where a smooth decline is preferred rather than linear penalty (e.g., struc
 **Formula:**
 
 ```text
-log_dampened = 1- ( logBaseN(1 + issues) / logBaseN(1 + threshold) )
+log_dampened = 1 - ( logBaseN(1 + issues) / logBaseN(1 + threshold) )
 ```
 
 Where:
@@ -1064,7 +1064,7 @@ Where:
 
 ```text
 similarity(i, j) ∈ [0, 1]
-distinctiveness = 1- similarity
+distinctiveness = 1 - similarity
 ```
 
 Similarity is computed from a combination of:
@@ -1099,7 +1099,7 @@ Used to avoid over-penalising large APIs for complexity if they are well-structu
 **Formula:**
 
 ```text
-logistic = 1 / (1 + exp(k × (value- midpoint)))
+logistic = 1 / (1 + exp(k × (value - midpoint)))
 ```
 
 - `k` controls steepness (recommended: 5–7).
@@ -1160,7 +1160,7 @@ Used when qualitative rule-based deductions apply (e.g., unsafe idempotency patt
 **Formula:**
 
 ```text
-score = 1.0- Σ(penalty[i] × severity_weight[i])
+score = 1.0 - Σ(penalty[i] × severity_weight[i])
 ```
 
 Clamped to **[0, 1]**.
@@ -1185,7 +1185,7 @@ Applied in Discoverability scoring when security posture SHOULD diminish visibil
 **Formula:**
 
 ```text
-risk_discount = 1- (0.5 × risk_index)
+risk_discount = 1 - (0.5 × risk_index)
 ```
 
 Clamped to `[0.6, 1.0]`, to avoid total suppression.
@@ -1193,7 +1193,7 @@ Clamped to `[0.6, 1.0]`, to avoid total suppression.
 Where:
 
 ```text
-risk_index = exposure_weight × sensitivity_weight × (1- base_security)
+risk_index = exposure_weight × sensitivity_weight × (1 - base_security)
 ```
 
 ## Scoring Model & Formulae
@@ -1344,5 +1344,3 @@ Grades SHOULD NOT be used as substitutes for readiness levels.
 | **Penalty** | A downward adjustment applied when a risk or deficiency is identified (e.g., missing pagination, weak auth, or unsafe error handling). |
 | **Bonus (or Uplift)** | A small upward modifier applied when extra AI-friendly metadata is present (e.g., workflows, AI intent hints). |
 | **Readability Score** | A measure of how easy text is to understand, based on approximate grade-level complexity (e.g., Flesch–Kincaid). Lower scores indicate simpler, more direct language. APIs targeting AI consumption benefit from 8–12 range; >16 introduces interpretation risk for models.<br><br>**≤ 8th grade:** universally readable<br>**9–12:** general technical audience (expected for API docs)<br>**> 16:** post-grad, cognitively expensive, increases model misinterpretation risk.<br><br>This score is determined by the LLM evaluating the `readability_score`. |
-
-
