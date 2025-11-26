@@ -207,7 +207,7 @@ An API MUST NOT be considered AI-ready if it fails foundational parsing or conta
 | `spec_validity` | MUST indicate whether the API parses as valid OpenAPI. | [binary](#binary-checks) |
 | `resolution_completeness` | MUST represent the proportion of $ref references that successfully resolve | [coverage](#coverage-normalisation) |
 | `lint_results` | Aggregated quality score from linter diagnostics, weighted by severity. | inverse [weighted categorical ratio](#weighted-categorical-normalisation) |
-| `structural_integrity` | MUST score schema correctness and coherence (e.g., oneOf misuse, contradictory typing, impossible constraints). | [inverse error](#inverse-error-normalisation) |
+| `structural_integrity` | MUST score schema correctness and coherence (e.g., oneOf misuse, contradictory typing, impossible constraints). | [logarithmic dampening](#logarithmic-dampening) |
 
 #### Spec Validity (spec_validity)
 
