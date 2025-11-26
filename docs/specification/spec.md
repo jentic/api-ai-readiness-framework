@@ -288,7 +288,7 @@ An API with strong DXJ SHOULD be predictable and pleasant for both human develop
 
 | Signal | Description | Normalisation Rule |
 | ---------------- | -------------------- | ---------------------------- |
-| `example_density` | MUST presence of examples across eligible locations. | [coverage](#coverage-normalisation) |
+| `example_density` | MUST indicate presence of examples across eligible locations. | [coverage](#coverage-normalisation) |
 | `example_validity` | MUST show schema-conformance of examples. | [coverage](#coverage-normalisation) |
 | `doc_clarity` | MUST quantify linguistic clarity of summaries and descriptions. | [min-max inverted](#minmax-inverted-normalisation) |
 | `response_coverage` | MUST indicate presence of meaningful success and error responses. | [coverage](#coverage-normalisation) |
@@ -393,7 +393,7 @@ summary_coverage = summaries_present / summaries_expected
 
 Where:
 
-- `summaries_expected` MUST take into account every specification object with `summary` field.
+- `summaries_expected` MUST take into account every specification object with `summary` fixed field.
 
 ##### Example
 
@@ -411,7 +411,7 @@ description_coverage = described_elements / describable_elements
 
 Where:
 
-- `describable_elements` MUST take into account every specification object with a `description` field.
+- `describable_elements` MUST take into account every specification object with a `description` fixed field.
 
 ##### Example
 
@@ -556,7 +556,7 @@ Where:
 
 ##### Normalised Schema Depth (normalised_schema_depth)
 
-A normalised indicator of schema nesting and structure depth across request/response bodies.
+A normalised indicator of schema nesting and structure depth across all schemas.
 
 Agent reasoning difficulty can be correlated to object depth, degree of polymorphism, and highly nested schemas.
 
