@@ -288,7 +288,7 @@ An API with strong DXJ SHOULD be predictable and pleasant for both human develop
 
 | Signal | Description | Normalisation Rule |
 | ---------------- | -------------------- | ---------------------------- |
-| `example_density` | MUST represent richness of examples across eligible locations. | [coverage](#coverage-normalisation) |
+| `example_density` | MUST indicate presence of examples across eligible locations. | [coverage](#coverage-normalisation) |
 | `example_validity` | MUST show schema-conformance of examples. | [coverage](#coverage-normalisation) |
 | `doc_clarity` | MUST quantify linguistic clarity of summaries and descriptions. | [min-max inverted](#minmax-inverted-normalisation) |
 | `response_coverage` | MUST indicate presence of meaningful success and error responses. | [coverage](#coverage-normalisation) |
@@ -297,9 +297,19 @@ An API with strong DXJ SHOULD be predictable and pleasant for both human develop
 
 #### Example Density (example_density)
 
+example_density MUST measure coverage of examples across all eligible specification locations.
+It represents whether each location includes at least one example, and NOT how many examples are provided.
+
 ```text
 example_density = present_examples / expected_examples
 ```
+
+Where:
+
+- each eligible location contributes one (`1`) to `expected_examples`, regardless of whether the location supports both _example_ and _examples_ fields from an OpenAPI perspective.
+- multiple _examples_ defined inside an _examples_ array MUST not increase `present_examples` beyond `1`.
+
+
 
 If `expected_examples = 0`, the value MUST be `1.0`.
 
@@ -366,8 +376,8 @@ ARAX evaluates whether an API is semantically interpretable by AI systems—spec
 
 | Signal | Description | Normalisation Rule |
 | ----------------- | --------------------- | ----------------------------- |
-| `summary_coverage` | MUST represent presence of concise summaries across operations/tags/info. | [coverage](#coverage-normalisation) |
-| `description_coverage` | MUST represent descriptive completeness across applicable API elements. | [coverage](#coverage-normalisation) |
+| `summary_coverage` | MUST represent presence of concise summaries across specification objects with a `summary` field (e.g.,operations/tags/info etc). | [coverage](#coverage-normalisation) |
+| `description_coverage` | MUST represent descriptive completeness across applicable API specification objects with a `description` field. | [coverage](#coverage-normalisation) |
 | `type_specificity` | MUST quantify richness of datatype modelling. | [weighted categorical](#weighted-categorical-normalisation) |
 | `policy_presence` | SHOULD represent inclusion of SLA/rate-limit/policy metadata. | [coverage](#coverage-normalisation) |
 | `error_standardization` | SHOULD favour structured error formats (RFC 9457/7807). | [coverage](#coverage-normalisation) |
@@ -381,12 +391,16 @@ ARAX evaluates whether an API is semantically interpretable by AI systems—spec
 summary_coverage = summaries_present / summaries_expected
 ```
 
+Where:
+
+- `summaries_expected` MUST take into account every specification object with `summary` fixed field.
+
 ##### Example
 
 ```text
 summary_coverage = 0.78  
  
-# 78% of operations/tags/info objects include a summary field
+# 78% of operations/tags/info objects etc. include a summary field
 ```
 
 #### Description Coverage (description_coverage)
@@ -395,12 +409,16 @@ summary_coverage = 0.78
 description_coverage = described_elements / describable_elements
 ```
 
+Where:
+
+- `describable_elements` MUST take into account every specification object with a `description` fixed field.
+
 ##### Example
 
 ```text
 description_coverage = 0.82 
 
-# 82% of info objects, operations, schemas, and parameters include descriptions
+# 82% of info objects, operations, schemas, parameters etc. include a description
 ```
 
 #### Type Specificity (type_specificity)
@@ -531,12 +549,14 @@ normalised_endpoint_count = min(1, total_operations / endpoint_baseline)
 
 Where:
 
-- `total_operations` = count of unique operations (method + path pairs)
-- `endpoint_baseline` = 50
+- `total_operations` is the count of unique forward-callable operations (method + path pairs). [Callbacks](https://spec.openapis.org/oas/v3.2.0.html#callback-object) and [webhooks](https://spec.openapis.org/oas/v3.2.0.html#oas-webhooks) MUST NOT be counted as endpoints.
+- `endpoint_baseline` is set at `50`.
+
+
 
 ##### Normalised Schema Depth (normalised_schema_depth)
 
-A normalised indicator of schema nesting and structure depth across request/response bodies.
+A normalised indicator of schema nesting and structure depth across all schemas.
 
 Agent reasoning difficulty can be correlated to object depth, degree of polymorphism, and highly nested schemas.
 
@@ -548,8 +568,10 @@ normalised_schema_depth = min(1, max_schema_depth / depth_baseline)
 
 Where:
 
-- `max_schema_depth` = deepest nesting found across all schemas
-- `depth_baseline` = 8
+- `max_schema_depth` is the deepest nesting found across all schemas
+- `depth_baseline` is set at `8`.
+
+Schemas referenced by callbacks/webhooks MUST be included in `normalised_schema_depth`, because they contribute to the overall semantic model complexity.
 
 #### Distinctiveness (distinctiveness)
 
@@ -818,7 +840,7 @@ The scoring framework does NOT hide unsafe APIs, but we apply a risk-aware disco
 
 #### Descriptive Richness (descriptive_richness)
 
-The descriptive_richness signal evaluates the semantic value of textual descriptions within an API description. It measures whether descriptions are sufficiently clear and detailed for AI systems to infer purpose, behaviour, and domain context.
+The `descriptive_richness` signal evaluates the semantic value of textual descriptions within an API description. It measures whether descriptions are sufficiently clear and detailed for AI systems to infer purpose, behaviour, and domain context.
 
 Applies to all describable elements, including but not limited to:
 
