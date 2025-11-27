@@ -1,6 +1,6 @@
 # Jentic API AI-Readiness Framework (JAIRF) Specification
 
-## Version 0.1.0
+## Version 0.2.0
 
 This document uses the key words MUST, MUST NOT, SHOULD, SHOULD NOT, and MAY as defined in [BCP 14](https://tools.ietf.org/html/bcp14) [RFC2119](https://tools.ietf.org/html/rfc2119) [RFC8174](https://tools.ietf.org/html/rfc8174) when, and only when, they appear in all capitals, as shown here.
 
@@ -207,7 +207,7 @@ An API MUST NOT be considered AI-ready if it fails foundational parsing or conta
 | `spec_validity` | MUST indicate whether the API parses as valid OpenAPI. | [binary](#binary-checks) |
 | `resolution_completeness` | MUST represent the proportion of $ref references that successfully resolve | [coverage](#coverage-normalisation) |
 | `lint_results` | Aggregated quality score from linter diagnostics, weighted by severity. | inverse [weighted categorical ratio](#weighted-categorical-normalisation) |
-| `structural_integrity` | MUST score schema correctness (e.g., oneOf misuse, contradictory typing, impossible constraints). | [inverse error](#inverse-error-normalisation) |
+| `structural_integrity` | MUST score schema correctness and coherence (e.g., oneOf misuse, contradictory typing, impossible constraints). | [logarithmic dampening](#logarithmic-dampening) |
 
 #### Spec Validity (spec_validity)
 
@@ -243,23 +243,34 @@ lint_results = max(0, 1 - (weighted_cost / 25))
 
 #### Structural Integrity (structural_integrity)
 
+The _structural integrity_ signal measures whether the API's underlying data model is coherent enough for automated reasoning. Unlike linting errors — which often relate to style, documentation, or optional best practices - structural issues reflect semantic or logical defects that prevent reliable interpretation by developers, tools, and AI agents.
+
+**Formula:**
+
+_Structural integrity_ MUST be calculated using a logarithmic dampening curve:
+
 ```text
-structural_integrity = max(0, 1 - (issues / 15))
+structural_integrity = max(0, 1 - (log10(1 + structural_issues / log10(1 + structural_issue_threshold)))
 ```
 
-**Threshold**
-A threshold of 15 represents the point where structural reliability collapses. Once an API has more than ~15 schema-breaking or integrity flaws, automated interpretation is no longer trustworthy.
+Where:
 
-A _structural issue_ is recorded when any of the following occur:
+- `issues` is the total count of structural defects detected.
+- `structural_issue_threshold` represents the point where structural reliability collapses. Once an API has more than ~15 schema-breaking or integrity flaws, automated interpretation is no longer trustworthy.
+
+The formula yields a smooth decay curve, prevents early collapse, but penalises structural issues more heavily than cosmetic issues.
+
+A _structural issue_ MUST be recorded when any of the following occur:
 
 | Category | Examples |
 | -------- | ------------ |
-| Invalid model shape | `type: object` but no `properties` defined |
-| Contradictory typing | `type: string` + `format: int32` |
-| Impossible constraints | `minimum > maximum` and contradictory schema constructs (where possible) |
-| Broken polymorphism | `oneOf` without discriminator (or incorrect discriminator usage/mapping), mismatched sub-schemas |
-| Response/request undefined | `requestBody: {}` or missing schema |
-| Non-evaluable example | example invalid JSON or contradicting type |
+| Invalid model shape | `type: object` but no `properties` defined; objects with additionalProperties: false but empty |
+| Contradictory typing | `type: string` + `format: int32`; arrays using incompatible items definitions |
+| Impossible constraints | `minimum > maximum`; exclusiveMinimum > exclusiveMaximum; enum values violating type, and contradictory schema constructs |
+| Broken polymorphism | `oneOf`/`anyOf`/`allOf` inconsistent; missing or invalid discriminator; unreachable or contradictory sub-schemas |
+| Response/request undefined | `requestBody: {}`; missing schemas; empty content definitions |
+| Non-evaluable example | Examples that are invalid JSON, violate the declared schema, or contradict field constraints |
+| Unresolvable or circular schema structures | Schemas that reference non-existent fields; recursive references without a valid base schema |
 
 #### Dimension Score
 
