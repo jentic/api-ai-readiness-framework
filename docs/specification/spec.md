@@ -712,8 +712,8 @@ This value is NOT the same as “operations that declare security”, it reflect
 As a guiding principle, an operation SHOULD be classified as a _sensitive operation_ if any of the following are true:
 
 - it performs a state changing action
- - uses HTTP methods such as: `POST`, `PUT`, `PATCH`, `DELETE`
- - has summaries/descriptions which suggest state change (e.g., "approve", "update", "assign", "create", "cancel"), even if HTTP verb is misused
+  - uses HTTP methods such as: `POST`, `PUT`, `PATCH`, `DELETE`
+  - has summaries/descriptions which suggest state change (e.g., "approve", "update", "assign", "create", "cancel"), even if HTTP verb is misused
 - it accesses or returns sensitive or personal data (customer records, user profiles, payment data, or any OpenAPI Schema Object containing detected PII fields)
 - it performs privileged or administrative actions
 - it exposes operational or system-level behaviours (configuration management details, system logs, workflow executions)
@@ -736,31 +736,31 @@ auth_strength = safe_divide(sum(strength_scores), count(schemes))
 The following table outlines the `auth_strength` scoring weights:
 
 | Scheme Type | Description | Example | Strength | Rationale |
-| ---- | ---- | ----------- | ------- | -------------------- |
-| **none** | No authentication mechanism | no `security:` block | **0.00** | Unsafe for sensitive APIs; permitted only when no sensitive ops exist. |
-| **http / basic** | Base64 user:pass | `scheme: basic` | **0.10** | Plaintext credentials; weak per RFC7617. |
-| **http / oauth** | OAuth 1.0 | `scheme: oauth` | **0.20** | Deprecated, complex, insecure signature model. |
-| **http / digest** | Digest Access Auth | `scheme: digest` | **0.20** | Outdated; vulnerable despite hashing. |
-| **apiKey (query)** | API key in query param | `in: query` | **0.15** | High leakage risk (logs, proxies, URLs). |
-| **apiKey (header/cookie)** | API key passed in header/cookie  | `in: header` | **0.50** | Common pattern but lacks scoping/rotation. |
-| **http / scram-sha-1** | SCRAM using SHA-1 | `scheme: scram-sha-1` | **0.25** | SHA-1 deprecated; limited security. |
-| **http / negotiate** | Kerberos/NTLM | `scheme: negotiate` | **0.35** | Violates HTTP semantics; legacy enterprise auth. |
-| **http / bearer (opaque)** | Bearer token without format | `scheme: bearer` | **0.60** | Strength depends entirely on distribution. |
-| **http / vapid** | WebPush VAPID | `scheme: vapid` | **0.60** | Similar risk to opaque bearer. |
-| **http / scram-sha-256** | SCRAM using SHA-256 | `scheme: scram-sha-256` | **0.65** | More secure, but still password-based. |
-| **http / bearer (JWT)** | Signed JWT | `bearerFormat: JWT` | **0.75** | Cryptographically verifiable tokens; supports scopes/claims. |
-| **http / privatetoken** | Privacy Pass | `scheme: privatetoken` | **0.75** | Strong cryptographic identity. |
-| **http / hoba** | HTTP Origin-Bound Auth | `scheme: hoba` | **0.80** | Client-bound cryptographic identity.  |
-| **http / concealed** | Concealed auth scheme | `scheme: concealed` | **0.85** | Modern, privacy-preserving authentication. |
-| **http / dpop** | Proof-of-possession | `scheme: dpop` | **0.90** | Prevents token replay; strong guarantees. |
-| **http / gnap** | GNAP framework | `scheme: gnap` | **0.90** | Modern successor to OAuth; strong architecture. |
-| **http / mutual** | HTTP-level mutual authentication | `scheme: mutual` | **0.95** | Cryptographically bound identity. |
-| **oauth2 / password** | ROPC  | flow: password | **0.30** | Deprecated; weak; violates least-privilege. |
-| **oauth2 / implicit** | Browser implicit | flow: implicit | **0.35** | Deprecated; token exposure vulnerability. |
-| **oauth2 / clientCredentials** | Server-to-server | flow: clientCredentials | **0.85** | Strong; scoped; widely recommended. |
-| **oauth2 / authorizationCode (PKCE)** | Best practice | flow: authorizationCode | **0.90** | Modern standard; strong protection. |
-| **openIdConnect** | OIDC Discovery/JWKs | type: openIdConnect | **1.00** | Gold standard for identity-bound access. |
-| **mutualTLS** | Client certificates | type: mutualTLS  | **1.00** | Hardware-backed identity; strongest available. |
+| ----------- | ----------- | ------- | -------- | --------- |
+| `none` | No authentication mechanism | no `security:` block | `0.00` | Unsafe for sensitive APIs; permitted only when `sensitive_ops_expected = 0`. |
+| `http / basic` | Base64 user:pass | `scheme: basic` | `0.10` | Plaintext credentials; easily leaked ([RFC7617](https://tools.ietf.org/html/rfc7617)). |
+| `http / oauth` | OAuth 1.0 | `scheme: oauth` | `0.20` | Deprecated; insecure signature model ([RFC5849](https://tools.ietf.org/html/rfc5849)). |
+| `http / digest` | Digest Access Auth | `scheme: digest` | `0.20` | Outdated; limited protection ([RFC7616](https://tools.ietf.org/html/rfc7616)). |
+| `apiKey (query)` | API key in query string | `in: query` | `0.15` | Very high leakage risk (logs, proxies, URLs). |
+| `apiKey (header/cookie)` | API key in header or cookie | `in: header` | `0.50` | Moderate security; lacks identity, scoping, or rotation controls. |
+| `http / scram-sha-1` | SCRAM with SHA-1 | `scheme: scram-sha-1` | `0.25` | Uses deprecated SHA-1 hashing ([RFC7804](https://tools.ietf.org/html/rfc7804)). |
+| `http / negotiate` | Kerberos/NTLM | `scheme: negotiate` | `0.35` | Legacy; violates HTTP semantics ([RFC4559](https://tools.ietf.org/html/rfc4559)). |
+| `http / bearer (opaque)` | Opaque bearer token | `scheme: bearer` | `0.60` | Security depends entirely on token distribution ([RFC6750](https://tools.ietf.org/html/rfc6750)). |
+| `http / vapid` | WebPush VAPID | `scheme: vapid` | `0.60` | Token model similar to bearer; moderate trust ([RFC8292](https://tools.ietf.org/html/rfc8292)). |
+| `http / scram-sha-256` | SCRAM with SHA-256 | `scheme: scram-sha-256` | `0.65` | Modern and stronger, still password-based ([RFC7804](https://tools.ietf.org/html/rfc7804)). |
+| `http / bearer (JWT)` | Signed JWT bearer token | `bearerFormat: JWT` | `0.75` | Cryptographically verifiable claims; supports scopes. |
+| `http / privatetoken` | Privacy Pass | `scheme: privatetoken` | `0.75` | Strong privacy-preserving cryptographic identity ([RFC9577](https://tools.ietf.org/html/rfc9577)). |
+| `http / hoba` | HTTP Origin-Bound Authentication | `scheme: hoba` | `0.80` | Asymmetric client-bound authentication ([RFC7486](https://tools.ietf.org/html/rfc7486)). |
+| `http / concealed` | Concealed HTTP authentication | `scheme: concealed` | `0.85` | Modern, high-assurance privacy-preserving authentication ([RFC9729](https://tools.ietf.org/html/rfc9729)). |
+| `http / dpop` | Demonstration of Proof-of-Possession | `scheme: dpop` | `0.90` | Prevents replay; binds token to client ([RFC9449](https://tools.ietf.org/html/rfc9449)). |
+| `http / gnap` | GNAP framework | `scheme: gnap` | `0.90` | Modern alternative to OAuth 2.0 ([RFC9635](https://tools.ietf.org/html/rfc9635)). |
+| `http / mutual` | HTTP Mutual Authentication | `scheme: mutual` | `0.95` | Cryptographically binding client/server identities ([RFC8120](https://tools.ietf.org/html/rfc8120)). |
+| `oauth2 / password` | Resource Owner Password Credentials | `flow: password` | `0.30` | Deprecated; violates least-privilege; insecure. |
+| `oauth2 / implicit` | Browser implicit flow | `flow: implicit` | `0.35` | Deprecated; exposes tokens via redirects. |
+| `oauth2 / clientCredentials` | Server-to-server | `flow: clientCredentials` | `0.85` | Strong, scoped, recommended for machine-to-machine. |
+| `oauth2 / authorizationCode (PKCE)` | Best practice auth flow | `flow: authorizationCode` | `0.90` | Most secure OAuth2 flow; protects public clients. |
+| `openIdConnect` | OIDC Discovery + JWKs | `type: openIdConnect` | `1.00` | Gold-standard identity-bound access. |
+| `mutualTLS` | Client TLS certificates | `type: mutualTLS` | `1.00` | Hardware-backed identity; strongest available. |
 
 
 If no security schemes are defined, auth_strength MUST return `1.0` (not applicable—no schemes to evaluate).
@@ -1362,7 +1362,7 @@ Gating rules MUST override or constrain dimension scores to ensure safety and co
 They MUST be applied immediately before readiness-level classification.
 
 | Condition | Effect | Rationale |
-|-----------|--------|-----------|
+| --------- | ------ | --------- |
 | Foundational Compliance score < 40 | API MUST be classified as Level 0 ("Non-Compliant") | If the API cannot be structurally validated, no higher-order AI reasoning is safe or possible. |
 | Hardcoded credentials detected | Security score MUST be capped at `20` | Hardcoded secrets represent an immediate, systemic security failure and cannot be compensated for by other strengths. |
 | Sensitive operations lacking auth (internal) | Security score MUST be capped at `40` | Internal APIs may permit limited trust boundaries, but unauthenticated sensitive operations remain high-risk. |
