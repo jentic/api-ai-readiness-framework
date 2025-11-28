@@ -702,20 +702,69 @@ This dimension measures authentication coverage, secret hygiene, transport secur
 auth_coverage = protected_sensitive_ops / sensitive_ops_expected
 ```
 
-If no operations require auth then `auth_coverage = 1`. Auth requirements are intent-aware, not “all ops”. LLM reasoning MAY be leverage to determine intent-awareness.
+If `sensitive_ops_expected = 0`, then `auth_coverage` MUST be `1.0`.
+
+##### Sensitive Operation Determination (sensitive_ops_expected)
+
+`sensitive_ops_expected` represents the count of operations that ought to require authentication.
+This value is NOT the same as “operations that declare security”, it reflects _intent-aware inference_ of security requirements.
+
+As a guiding principle, an operation SHOULD be classified as a _sensitive operation_ if any of the following are true:
+
+- it performs a state changing action
+  - uses HTTP methods such as: `POST`, `PUT`, `PATCH`, `DELETE`
+  - has summaries/descriptions which suggest state change (e.g., "approve", "update", "assign", "create", "cancel"), even if HTTP verb is misused
+- it accesses or returns sensitive or personal data (customer records, user profiles, payment data, or any OpenAPI Schema Object containing detected PII fields)
+- it performs privileged or administrative actions
+- it exposes operational or system-level behaviours (configuration management details, system logs, workflow executions)
+
+LLM reasoning MAY be used to help perform classification.
+
 
 #### Auth Strength (auth_strength)
 
+The auth_strength signal measures the robustness and correctness of authentication mechanisms declared by the API.
+It evaluates the average strength of all security schemes using normative scores based on IANA auth-scheme definitions, OAuth2 best practices, OIDC, API Key placement, and mutual TLS.
+
+**Formula:**
+
 ```text
-auth_strength = average_strength_of_security_schemes
+# auth_strength = average_strength_of_security_schemes
+auth_strength = safe_divide(sum(strength_scores), count(schemes))
 ```
 
-Where:
+The following table outlines the `auth_strength` scoring weights:
 
-- none/basic: `0.0- 0.2`
-- API Key: `0.5`
-- OAuth 2+ (and not obsolete type): `0.85`
-- OIDC + scopes: `1.0`
+| Scheme Type | Description | Example | Strength | Rationale |
+| ----------- | ----------- | ------- | -------- | --------- |
+| `none` | No authentication mechanism | no `security:` block | `0.00` | Unsafe for sensitive APIs; permitted only when `sensitive_ops_expected = 0`. |
+| `http / basic` | Base64 user:pass | `scheme: basic` | `0.10` | Plaintext credentials; easily leaked ([RFC7617](https://tools.ietf.org/html/rfc7617)). |
+| `http / oauth` | OAuth 1.0 | `scheme: oauth` | `0.20` | Deprecated; insecure signature model ([RFC5849](https://tools.ietf.org/html/rfc5849)). |
+| `http / digest` | Digest Access Auth | `scheme: digest` | `0.20` | Outdated; limited protection ([RFC7616](https://tools.ietf.org/html/rfc7616)). |
+| `apiKey (query)` | API key in query string | `in: query` | `0.15` | Very high leakage risk (logs, proxies, URLs). |
+| `apiKey (header/cookie)` | API key in header or cookie | `in: header` | `0.50` | Moderate security; lacks identity, scoping, or rotation controls. |
+| `http / scram-sha-1` | SCRAM with SHA-1 | `scheme: scram-sha-1` | `0.25` | Uses deprecated SHA-1 hashing ([RFC7804](https://tools.ietf.org/html/rfc7804)). |
+| `http / negotiate` | Kerberos/NTLM | `scheme: negotiate` | `0.35` | Legacy; violates HTTP semantics ([RFC4559](https://tools.ietf.org/html/rfc4559)). |
+| `http / bearer (opaque)` | Opaque bearer token | `scheme: bearer` | `0.60` | Security depends entirely on token distribution ([RFC6750](https://tools.ietf.org/html/rfc6750)). |
+| `http / vapid` | WebPush VAPID | `scheme: vapid` | `0.60` | Token model similar to bearer; moderate trust ([RFC8292](https://tools.ietf.org/html/rfc8292)). |
+| `http / scram-sha-256` | SCRAM with SHA-256 | `scheme: scram-sha-256` | `0.65` | Modern and stronger, still password-based ([RFC7804](https://tools.ietf.org/html/rfc7804)). |
+| `http / bearer (JWT)` | Signed JWT bearer token | `bearerFormat: JWT` | `0.75` | Cryptographically verifiable claims; supports scopes. |
+| `http / privatetoken` | Privacy Pass | `scheme: privatetoken` | `0.75` | Strong privacy-preserving cryptographic identity ([RFC9577](https://tools.ietf.org/html/rfc9577)). |
+| `http / hoba` | HTTP Origin-Bound Authentication | `scheme: hoba` | `0.80` | Asymmetric client-bound authentication ([RFC7486](https://tools.ietf.org/html/rfc7486)). |
+| `http / concealed` | Concealed HTTP authentication | `scheme: concealed` | `0.85` | Modern, high-assurance privacy-preserving authentication ([RFC9729](https://tools.ietf.org/html/rfc9729)). |
+| `http / dpop` | Demonstration of Proof-of-Possession | `scheme: dpop` | `0.90` | Prevents replay; binds token to client ([RFC9449](https://tools.ietf.org/html/rfc9449)). |
+| `http / gnap` | GNAP framework | `scheme: gnap` | `0.90` | Modern alternative to OAuth 2.0 ([RFC9635](https://tools.ietf.org/html/rfc9635)). |
+| `http / mutual` | HTTP Mutual Authentication | `scheme: mutual` | `0.95` | Cryptographically binding client/server identities ([RFC8120](https://tools.ietf.org/html/rfc8120)). |
+| `oauth2 / password` | Resource Owner Password Credentials | `flow: password` | `0.30` | Deprecated; violates least-privilege; insecure. |
+| `oauth2 / implicit` | Browser implicit flow | `flow: implicit` | `0.35` | Deprecated; exposes tokens via redirects. |
+| `oauth2 / clientCredentials` | Server-to-server | `flow: clientCredentials` | `0.85` | Strong, scoped, recommended for machine-to-machine. |
+| `oauth2 / authorizationCode (PKCE)` | Best practice auth flow | `flow: authorizationCode` | `0.90` | Most secure OAuth2 flow; protects public clients. |
+| `openIdConnect` | OIDC Discovery + JWKs | `type: openIdConnect` | `1.00` | Gold-standard identity-bound access. |
+| `mutualTLS` | Client TLS certificates | `type: mutualTLS` | `1.00` | Hardware-backed identity; strongest available. |
+
+
+If no security schemes are defined, auth_strength MUST return `1.0` (not applicable—no schemes to evaluate).
+This does not imply the API is secure; [gating rules](#gating-rules) handle misconfigurations involving sensitive operations.
 
 #### Transport Security (transport_security)
 
@@ -943,7 +992,7 @@ domain_tagging = ops_with_domain_tags / total_operations
 #### Dimension Score
 
 ```text
-AID_raw = 100 ×(descriptive_richness + intent_phrasing + workflow_context + registry_signals + domain_tagging)/5
+AID_raw = 100 × (descriptive_richness + intent_phrasing + workflow_context + registry_signals + domain_tagging) / 5
 ```
 
 ##### Soft Risk Discount
@@ -1312,13 +1361,16 @@ The harmonic mean MUST be considered core to the JAIRF model.
 Gating rules MUST override or constrain dimension scores to ensure safety and correctness.
 They MUST be applied immediately before readiness-level classification.
 
-| Condition | Effect |
-| --------- | ------ |
-| Foundational Compliance score < 40 | API MUST be classified as Level 0 ("Non-Compliant") |
-| Hardcoded credentials detected | Security score MUST be capped at `20` |
-| Sensitive operations lacking auth | Security score MUST be capped at `40` |
-| Unprotected PII on partner/public APIs | Security score MUST be capped at 50 |
-| Non-TLS public endpoints | Security score MUST be multiplied by `0.8` |
+| Condition | Effect | Rationale |
+| --------- | ------ | --------- |
+| Foundational Compliance score < 40 | API MUST be classified as Level 0 ("Non-Compliant") | If the API cannot be structurally validated, no higher-order AI reasoning is safe or possible. |
+| Hardcoded credentials detected | Security score MUST be capped at `20` | Hardcoded secrets represent an immediate, systemic security failure and cannot be compensated for by other strengths. |
+| Sensitive operations lacking auth (internal) | Security score MUST be capped at `40` | Internal APIs may permit limited trust boundaries, but unauthenticated sensitive operations remain high-risk. |
+| Sensitive operations lacking auth (partner) | Security score MUST be capped at `30` | Partner-facing APIs must enforce authentication on sensitive operations; failure is a severe but not catastrophic risk. |
+| Sensitive operations lacking auth (public) | Security score MUST be capped at `20` | Public unauthenticated sensitive operations are critical vulnerabilities and must be treated as near-fail conditions. |
+| Unprotected PII on partner/public APIs | Security score MUST be capped at `50` | Exposure of identifiable data without proper controls violates trust and regulatory expectations. |
+| Non-TLS public endpoints (http://) | Security score MUST be multiplied by `0.5` | Plaintext transport exposes tokens, credentials, and PII; catastrophic for external integrations. |
+
 
 Gating MUST NOT alter the raw signals or other dimension scores directly; gating applies only to the affected dimension score.
 

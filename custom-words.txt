@@ -5,8 +5,10 @@ ARAX
 arax
 Arazzo
 Auth
+dpop
 Flesch
 HATEOAS
+hoba
 JAIRF
 Jentic
 Kilcommins
@@ -15,4 +17,7 @@ llm
 llms
 opid
 parsable
+PKCE
+privatetoken
 Redocly
+ROPC
