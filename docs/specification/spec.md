@@ -729,9 +729,11 @@ It evaluates the average strength of all security schemes using normative scores
 **Formula:**
 
 ```text
-# auth_strength = average_strength_of_security_schemes
-auth_strength = safe_divide(sum(strength_scores), count(schemes))
+auth_strength = sum(strength_scores) / schemes_count
 ```
+Where
+- `strength_scores` is the list of calculated scheme strengths
+- `schemes_count` is the number of defined schemes
 
 The following table outlines the `auth_strength` scoring weights:
 
