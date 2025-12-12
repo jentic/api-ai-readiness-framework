@@ -255,7 +255,7 @@ structural_integrity = max(0, 1 - (log10(1 + structural_issues / log10(1 + struc
 
 Where:
 
-- `issues` is the total count of structural defects detected.
+- `structural_issues` is the total count of structural defects detected.
 - `structural_issue_threshold` represents the point where structural reliability collapses. Once an API has more than ~15 schema-breaking or integrity flaws, automated interpretation is no longer trustworthy.
 
 The formula yields a smooth decay curve, prevents early collapse, but penalises structural issues more heavily than cosmetic issues.
