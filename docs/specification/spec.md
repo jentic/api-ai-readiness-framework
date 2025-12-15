@@ -347,7 +347,7 @@ response_coverage = operations_with_meaningful_responses / total_operations
 #### Tooling Readiness (tooling_readiness)
 
 ```text
-tooling_readiness = max(0, 1- (ingestion_errors / 15))
+tooling_readiness = max(0, 1 - (ingestion_errors / 15))
 ```
 
 **Tooling Readiness Threshold**
