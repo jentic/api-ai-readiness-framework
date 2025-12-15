@@ -236,7 +236,7 @@ resolution_completeness = 0.92
 This signal leverages core ruleset of Spectral and Redocly, with Jentic opinions applied, as well as a Jentic custom ruleset.
 
 ```text
-weighted_cost = SQRT((1.0 * critical) + (0.6 * errors) + (0.025 * warnings) + (0.005 * info))
+weighted_cost = SQRT((1.0 * critical) + (0.6 * errors) + (0.0025 * warnings) + (0.001 * info) + (0.0 * hint))
 
 lint_results = max(0, 1 - (weighted_cost / 25))
 ```
