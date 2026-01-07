@@ -470,12 +470,23 @@ This is important for helping AI reason about failure modes, not just success pa
 #### OperationId Quality (opid_quality)
 
 ```text
-coverage         = ops_with_operationId / total_operations
-distinctiveness  = 1 - mean_semantic_similarity
-opid_quality     = coverage × distinctiveness
+coverage            = ops_with_operation_id / total_operations
+uniqueness          = unambiguous_operation_ids / ops_with_operation_id
+casing_consistency  = dominant_casing_count / ops_with_operation_id
+opid_quality        = coverage × uniqueness × casing_consistency
 ```
 
-If multiple ops appear to offer “getUser” operation, distinctiveness drops and harms AI inference.
+Where:
+
+- `unambiguous_operation_ids` is count of operationIds whose lowercase form appears exactly once (i.e., no case-insensitive duplicates)
+- `dominant_casing_count` is count of operationIds using the most common casing style
+
+Casing styles detected:
+
+- camelCase, PascalCase, snake_case, kebab-case
+- SCREAMING_SNAKE_CASE, lowercase, UPPERCASE
+
+If multiple ops appear to offer “getUser” operation, uniqueness drops and harms AI inference.
 
 #### AI Semantic Surface (ai_semantic_surface)
 
