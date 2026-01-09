@@ -386,13 +386,13 @@ ARAX evaluates whether an API is semantically interpretable by AI systems—spec
 #### Required Signals
 
 | Signal | Description | Normalisation Rule |
-| ----------------- | --------------------- | ----------------------------- |
+| --- | --- | --- |
 | `summary_coverage` | MUST represent presence of concise summaries across specification objects with a `summary` field (e.g.,operations/tags/info etc). | [coverage](#coverage-normalisation) |
 | `description_coverage` | MUST represent descriptive completeness across applicable API specification objects with a `description` field. | [coverage](#coverage-normalisation) |
 | `type_specificity` | MUST quantify richness of datatype modelling. | [weighted categorical](#weighted-categorical-normalisation) |
 | `policy_presence` | SHOULD represent inclusion of SLA/rate-limit/policy metadata. | [coverage](#coverage-normalisation) |
 | `error_standardization` | SHOULD favour structured error formats (RFC 9457/7807). | [coverage](#coverage-normalisation) |
-| `opid_quality` | MUST evaluate presence and distinctiveness of operationId values. | [composite](#composite-signal-normalisation) |
+| `opid_quality` | MUST evaluate operationId coverage, uniqueness (with collision penalty), and casing consistency. | [composite](#composite-signal-normalisation) |
 | `ai_semantic_surface` | MAY provide bonus uplift for AI-oriented metadata. | [bonus multiplier](#bonus-multipliers) |
 
 
@@ -470,12 +470,28 @@ This is important for helping AI reason about failure modes, not just success pa
 #### OperationId Quality (opid_quality)
 
 ```text
-coverage         = ops_with_operationId / total_operations
-distinctiveness  = 1 - mean_semantic_similarity
-opid_quality     = coverage × distinctiveness
+coverage            = ops_with_operation_id / total_operations
+uniqueness          = unambiguous_operation_ids / ops_with_operation_id / total_collision_issues
+casing_consistency  = dominant_casing_count / ops_with_operation_id
+opid_quality        = coverage × uniqueness × casing_consistency
 ```
 
-If multiple ops appear to offer “getUser” operation, distinctiveness drops and harms AI inference.
+Where:
+
+- `unambiguous_operation_ids` is count of operationIds whose lowercase form appears exactly once (i.e., no case-insensitive duplicates)
+- `total_collision_issues` is the total number of case-sensitive operationId collisions (e.g., getUser vs GetUser vs getUser would count as 2 collision issues)
+- `dominant_casing_count` is count of operationIds using the most common casing style
+
+If `total_operations = 0`, then `opid_quality` MUST be `1.0`.
+If `total_collision_issues = 0`, then it is having no effect on `uniqueness` (i.e., it is `1.0`).
+If `ops_with_operation_id` = 0, then `uniqueness` = 1.0 and `casing_consistency` = 1.0
+
+Casing styles detected:
+
+- camelCase, PascalCase, snake_case, kebab-case
+- SCREAMING_SNAKE_CASE, lowercase, UPPERCASE
+
+If multiple ops appear to offer “getUser” operation, uniqueness drops and harms AI inference.
 
 #### AI Semantic Surface (ai_semantic_surface)
 
@@ -507,7 +523,7 @@ description_coverage: 0.82     # 82% described
 type_specificity: 0.76         # formats & enums used meaningfully
 policy_presence: 0.40          # limited SLA/policy metadata
 error_standardization: 0.50    # only half define RFC9457 (of RFC8707)
-opid_quality: 0.90             # distinct & descriptive
+opid_quality: 0.90             # coverage & uniqueness & consistency
 ai_semantic_surface: 0.30      # minimal Arazzo/AI hints
 
 core = (0.8 + 0.82 + 0.76 + 0.40 + 0.50 + 0.90) / 6 
@@ -1111,7 +1127,7 @@ Used when a signal is derived from multiple measurable sub-signals (e.g., operat
 composite = Σ(sub_score[i] × weight[i]) / Σ(weight[i])
 
 # Example for illustration:
-opid_quality = (uniqueness_ratio × 0.5 + semantic_quality × 0.5)
+opid_quality = coverage × uniqueness × casing_consistency
 ```
 
 All sub-scores MUST first be individually normalised into [0, 1].
