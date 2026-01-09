@@ -392,7 +392,7 @@ ARAX evaluates whether an API is semantically interpretable by AI systems—spec
 | `type_specificity` | MUST quantify richness of datatype modelling. | [weighted categorical](#weighted-categorical-normalisation) |
 | `policy_presence` | SHOULD represent inclusion of SLA/rate-limit/policy metadata. | [coverage](#coverage-normalisation) |
 | `error_standardization` | SHOULD favour structured error formats (RFC 9457/7807). | [coverage](#coverage-normalisation) |
-| `opid_quality` | MUST evalute operationId coverage, uniqueness (with collision penalty), and casing consistency. | [composite](#composite-signal-normalisation) |
+| `opid_quality` | MUST evaluate operationId coverage, uniqueness (with collision penalty), and casing consistency. | [composite](#composite-signal-normalisation) |
 | `ai_semantic_surface` | MAY provide bonus uplift for AI-oriented metadata. | [bonus multiplier](#bonus-multipliers) |
 
 
