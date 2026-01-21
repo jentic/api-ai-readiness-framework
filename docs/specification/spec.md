@@ -340,9 +340,25 @@ Where readability_score ∈ [8, 16] (`8` is easy to read, `16` would be legalese
 
 #### Response Coverage (response_coverage)
 
+Measures the percentage of operations that define complete response outcomes.
+Uses graded scoring per operation based on response categories present.
+
+**Formula:**
+
 ```text
-response_coverage = operations_with_meaningful_responses / total_operations
+response_coverage = sum(operation_response_coverage) / total_operations
 ```
+
+Where:
+
+Each operation receives an `operation_response_coverage` from 0.0 to 1.0:
+
+- +0.25 if at least one 2XX response is defined
+- +0.25 if at least one 4XX response is defined
+- +0.25 if at least one 5XX response is defined
+- +0.25 if default response is defined
+
+If `total_operations = 0`, the value MUST be `1.0`.
 
 #### Tooling Readiness (tooling_readiness)
 
