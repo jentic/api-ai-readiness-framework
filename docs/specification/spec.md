@@ -250,7 +250,7 @@ The _structural integrity_ signal measures whether the API's underlying data mod
 _Structural integrity_ MUST be calculated using a logarithmic dampening curve:
 
 ```text
-structural_integrity = max(0, 1 - (log10(1 + structural_issues / log10(1 + structural_issue_threshold)))
+structural_integrity = max(0, 1 - log10(1 + structural_issues) / log10(1 + structural_issue_threshold))
 ```
 
 Where:
