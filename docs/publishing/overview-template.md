@@ -53,7 +53,7 @@ Descriptive richness, intent phrasing, workflow context, and registry signals. C
 The final AI-Readiness score maps to one of five levels:
 
 | Level | Score Range | Name | Meaning |
-|-------|-------------|------|---------|
+| ----- | ----------- | ---- | ------- |
 | **Level 0** | < 40 | **Not Ready** | Fundamentally unsuitable for AI or agents |
 | **Level 1** | 40–60 | **Foundational** | Developer-ready, partially AI-usable |
 | **Level 2** | 60–75 | **AI-Aware** | Semantically interpretable, safe for guided use |

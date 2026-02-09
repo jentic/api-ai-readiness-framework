@@ -8,7 +8,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## Implementation Status Key
 
 | Symbol | Status | Description |
-|--------|--------|-------------|
+| ------ | ------ | ----------- |
 | ✅ | Implemented | Signal is fully implemented and tested |
 | 🚧 | In Progress | Signal implementation is underway |
 | 📋 | Planned | Signal is specified but not yet implemented |
@@ -19,7 +19,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## Foundational Compliance (FC)
 
 | Signal | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | `spec_validity` | ✅ | Binary check for valid OpenAPI |
 | `resolution_completeness` | ✅ | $ref resolution tracking |
 | `lint_results` | ✅ | Spectral/Redocly integration |
@@ -28,7 +28,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## Developer Experience & Tooling Compatibility (DXJ)
 
 | Signal | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | `example_density` | ✅ | Coverage across eligible locations |
 | `example_validity` | ✅ | Schema conformance checking |
 | `doc_clarity` | 📋 | Readability scoring |
@@ -38,7 +38,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## AI-Readiness & Agent Experience (ARAX)
 
 | Signal | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | `summary_coverage` | ✅ | Summary field presence |
 | `description_coverage` | ✅ | Description field presence |
 | `type_specificity` | 📋 | Datatype richness |
@@ -50,7 +50,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## Agent Usability (AU)
 
 | Signal | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | `complexity_comfort` | ✅ | Endpoint count + schema depth |
 | `distinctiveness` | 📋 | Semantic similarity analysis |
 | `pagination` | 📋 | Paginated GET detection |
@@ -63,7 +63,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## Security (SEC)
 
 | Signal | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | `auth_coverage` | 📋 | Protected sensitive operations |
 | `auth_strength` | ✅ | Security scheme strength scoring |
 | `transport_security` | 📋 | HTTPS requirement |
@@ -74,7 +74,7 @@ This page tracks the implementation status of signals in the Jentic API AI-Readi
 ## AI Discoverability (AID)
 
 | Signal | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | `descriptive_richness` | ✅ | Semantic description quality |
 | `intent_phrasing` | 📋 | Verb-object clarity |
 | `workflow_context` | 📋 | Arazzo/workflow references |
