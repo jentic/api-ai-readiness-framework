@@ -23,13 +23,21 @@ JAIRF is published as a Markdown specification designed for adoption, extension,
 
 Head over to [Jentic API AI-Readiness Scoring](https://jentic.com/api-score-preview) page, to see AI-readiness scoring in action.
 
+## Publishing
+
+Changes to `docs/specification/spec.md` on the `main` branch automatically publish to [jentic-docs](https://github.com/jentic/jentic-docs) via GitHub Actions. The workflow creates a PR with the updated specification.
+
+**Requirements**: Repository secret `JENTIC_DOCS_TOKEN` (GitHub PAT with `repo` scope).
+
+**Local testing**: `./scripts/publish-to-docs.sh --dry-run test-sha dummy-token`
+
 ## Maintainers
 
 See [MAINTAINERS.md](./MAINTAINERS.md).
 
 ## Contributing
 
-A `CONTRIBUTING.md` guide will be added shortly.  
+A `CONTRIBUTING.md` guide will be added shortly.
 Issues, discussions, and pull requests are welcome.
 
 ## License

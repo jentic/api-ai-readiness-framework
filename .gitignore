@@ -9,3 +9,4 @@ deploy/
 deploy-preview/
 history
 coverage/
+.preview/

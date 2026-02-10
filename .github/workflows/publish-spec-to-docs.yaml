@@ -1,0 +1,29 @@
+name: Publish Specification to Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Publish to jentic-docs
+        env:
+          GH_TOKEN: ${{ secrets.JENTIC_DOCS_TOKEN }}
+        run: |
+          bash scripts/publish-to-docs.sh ${{ github.sha }} ${{ secrets.JENTIC_DOCS_TOKEN }}
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Specification published successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the created PR in jentic-docs repository." >> $GITHUB_STEP_SUMMARY
