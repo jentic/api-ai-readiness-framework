@@ -1,4 +1,4 @@
-# API AI-Readiness Framework
+# Jentic API AI-Readiness Framework
 
 **Current Version**: {{VERSION}}
 **Last Updated**: {{TIMESTAMP}}
