@@ -4,6 +4,7 @@
 **Last Updated**: {{TIMESTAMP}}
 
 [View Full Specification](specification.md){ .md-button .md-button--primary }
+[Score Your API](https://jentic.com/scorecard){ .md-button .md-button--secondary }
 
 ## What is the API AI-Readiness Framework?
 
