@@ -29,6 +29,6 @@
   "homepage": "https://github.com/jentic/api-ai-readiness-framework#readme",
   "devDependencies": {
     "cspell": "^9.3.2",
-    "markdownlint-cli2": "^0.19.1"
+    "markdownlint-cli2": "^0.21.0"
   }
 }
