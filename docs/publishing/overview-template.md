@@ -100,9 +100,10 @@ The framework works with OpenAPI 3.x and 2.x specifications. It's implementation
 - **[Jentic Public APIs](https://github.com/jentic/jentic-public-apis)** — Collection of scored API specifications demonstrating the framework in practice
 
 **Blog Posts**:
-  - [Why Most APIs Fail in AI Systems and How to Fix It](https://thenewstack.io/why-most-apis-fail-in-ai-systems-and-how-to-fix-it/) (The New Stack)
-  - [Is Your OpenAPI AI-Ready?](https://jentic.com/blog/is-your-open-api-ai-ready) (Jentic)
-  - [Scoring APIs for AI](https://jentic.com/blog/scoring-apis-for-ai) (Jentic)
+
+- [Why Most APIs Fail in AI Systems and How to Fix It](https://thenewstack.io/why-most-apis-fail-in-ai-systems-and-how-to-fix-it/) (The New Stack)
+- [Is Your OpenAPI AI-Ready?](https://jentic.com/blog/is-your-open-api-ai-ready) (Jentic)
+- [Scoring APIs for AI](https://jentic.com/blog/scoring-apis-for-ai) (Jentic)
 
 ## Contributing
 
