@@ -1,6 +1,6 @@
 {
   "name": "api-ai-readiness-framework",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A technical specification for the Jentic API AI-Readiness Framework (JAIRF). Defines the signals, dimensions, scoring model, and normalisation rules used to evaluate how interpretable, operable, and trustworthy APIs are for AI systems and autonomous agents.",
   "main": "index.js",
   "directories": {
