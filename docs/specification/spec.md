@@ -1,6 +1,6 @@
 # Jentic API AI-Readiness Framework (JAIRF) Specification
 
-## Version 1.0.0
+## Version 0.2.0
 
 This document uses the key words MUST, MUST NOT, SHOULD, SHOULD NOT, and MAY as defined in [BCP 14](https://tools.ietf.org/html/bcp14) [RFC2119](https://tools.ietf.org/html/rfc2119) [RFC8174](https://tools.ietf.org/html/rfc8174) when, and only when, they appear in all capitals, as shown here.
 
@@ -587,20 +587,14 @@ API usability for agents degrades as endpoint count grows — but only after a c
 **Formula:**
 
 ```text
-normalised_endpoint_count = max(0, min(1, (total_operations - 50) / 150))
+normalised_endpoint_count = min(1, total_operations / endpoint_baseline)
 ```
 
 Where:
 
 - `total_operations` is the count of unique forward-callable operations (method + path pairs). [Callbacks](https://spec.openapis.org/oas/v3.2.0.html#callback-object) and [webhooks](https://spec.openapis.org/oas/v3.2.0.html#oas-webhooks) MUST NOT be counted as endpoints.
-- Penalties begin at 50 operations and reach maximum at 200 operations, with linear interpolation between these thresholds.
+- `endpoint_baseline` is set at `50`.
 
-Examples:
-
-- 50 operations:  0% penalty (comfort zone boundary)
-- 100 operations: 33% penalty (moderate complexity)
-- 150 operations: 67% penalty (substantial complexity)
-- 200+ operations: 100% penalty (monolithic)
 
 
 ##### Normalised Schema Depth (normalised_schema_depth)
@@ -612,30 +606,20 @@ Agent reasoning difficulty can be correlated to object depth, degree of polymorp
 **Formula:**
 
 ```text
-normalised_schema_depth = min(1, (max_schema_depth / depth_baseline) × pct_schemas_exceeding)
+normalised_schema_depth = min(1, max_schema_depth / depth_baseline)
 ```
 
 Where:
 
 - `max_schema_depth` is the deepest nesting found across all schemas
-- `pct_schemas_exceeding` is the proportion of schemas exceeding the depth threshold:
-  pct_schemas_exceeding = count(schemas with depth > depth_baseline) / total_schemas
-- `depth_baseline` is set at `18`
+- `depth_baseline` is set at `8`.
 
 Schemas referenced by callbacks/webhooks MUST be included in `normalised_schema_depth`, because they contribute to the overall semantic model complexity.
-
-The penalty is proportional to schema depth prevalence, not just maximum depth. An API where 1% of schemas exceed the threshold (outliers) receives 1% of the maximum penalty, while an API where 80% of schemas exceed (uniform complexity) receives 80% of the maximum penalty. This directly models agent operational experience. Agents encounter complexity proportional to its prevalence in the schema set, not based solely on the existence of a single deep schema.
-
-Examples:
-
-- 1% of schemas exceed threshold: 1% of max penalty applied (outlier case)
-- 50% of schemas exceed threshold: 50% of max penalty applied
-- 80% of schemas exceed threshold: 80% of max penalty applied (uniform complexity)
 
 #### Distinctiveness (distinctiveness)
 
 ```text
-distinctiveness = 1 - avg_semantic_similarity
+distinctiveness = 1- avg_semantic_similarity
 ```
 
 #### Pagination (pagination)
