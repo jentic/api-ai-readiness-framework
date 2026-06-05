@@ -33,6 +33,18 @@ Sample Top-level Scorecard:
 
 ![Sample Scorecard](assets/sample-score-card-header.png)
 
+### Score using the CLI
+
+You can also score any OpenAPI document directly from the terminal using the **Jentic API Scorecard CLI**. With the CLI you can have scoring running entirely locally — no data is sent to Jentic:
+
+```bash
+npx @jentic/api-scorecard-cli@latest score <url-or-path-to-openapi-spec>
+```
+
+![Jentic API Scorecard CLI](assets/cli-screenshot.png)
+
+For more details, visit the [Jentic API Scorecard CLI repository](https://github.com/jentic/jentic-api-scorecard).
+
 ## Publishing
 
 Changes to `docs/specification/spec.md` on the `main` branch automatically publish to [jentic-docs](https://github.com/jentic/jentic-docs) via GitHub Actions. The workflow creates a PR with the updated specification.
